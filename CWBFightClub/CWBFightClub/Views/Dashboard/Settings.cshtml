@@ -1,0 +1,87 @@
+﻿@model AppSetting
+@{ ViewData["Title"] = "Settings";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+
+<!-- Use id=main for all content to be pushed by the side nav. -->
+<div id="main">
+    <partial name="_SettingsNav" />
+    <div id="saveSuccess" class="badge-success text-center">
+        @if (ViewBag.Saved != null && ViewBag.Saved)
+        {
+<span>Save Success</span>}
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-6">
+            <h4 class="text-center">Global App Settings</h4>
+        </div>
+    </div>
+    <form asp-action="Settings" class="form form-horizontal">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="AppSettingID" value="@Model.AppSettingID" />
+        <div class="form-group row">
+            <label asp-for="BundleCostPerMonth" class="text-sm-right col-sm-3 col-form-label"></label>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input type="number" step=".01" asp-for="BundleCostPerMonth" class="form-control" />
+                </div>
+                <span asp-validation-for="BundleCostPerMonth" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="BundleCostPerThreeMonths" class="text-sm-right col-sm-3 col-form-label"></label>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input type="number" step=".01" asp-for="BundleCostPerThreeMonths" class="form-control" />
+                </div>
+                <span asp-validation-for="BundleCostPerThreeMonths" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="BundleCostPerYear" class="text-sm-right col-sm-3 col-form-label"></label>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input type="number" step=".01" asp-for="BundleCostPerYear" class="form-control" />
+                </div>
+                <span asp-validation-for="BundleCostPerYear" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="PercentOfClassRequiredToVerify" class="text-sm-right col-sm-3 col-form-label"></label>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input type="number" min="0" max="100" step="1" asp-for="PercentOfClassRequiredToVerify" class="form-control" />
+                    <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+                <span asp-validation-for="PercentOfClassRequiredToVerify" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-sm-6" style="margin-top: 20px">
+                <input style="float:right" type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    $(function() {
+        $("#saveSuccess").delay(2000).fadeOut(1000);
+    });
+</script>
+}

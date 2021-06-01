@@ -1,0 +1,211 @@
+﻿@model AttendanceRecord
+
+@{
+    ViewData["Title"] = "Checkin";
+    Layout = "_Layout";
+
+    IEnumerable<Student> enrolledStudents = ViewBag.EnrolledStudents;
+    IEnumerable<Student> notEnrolledStudents = ViewBag.NotEnrolledStudents;
+}
+
+<h1 class="text-center">Checkin</h1>
+
+<div class="row mb-2">
+    <div class="col-6">
+    </div>
+    <div class="col-6">
+        <div class="container">
+            <form class="form-inline float-right" method="get" asp-action="Checkin">
+                <input class="form-control" name="searchString" asp-for="@ViewData["CurrentSearch"]" placeholder="Search" />
+                <div class="ml-2 btn-group">
+                    <button class="mr-2 btn btn-sm btn-primary" type="submit">Search</button>
+                    <a asp-action="Checkin" class="mr-2 btn btn-sm btn-secondary">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<h3>Enrolled Students</h3>
+@if (enrolledStudents == null || !enrolledStudents.Any())
+{
+    <p class="text-center alert-danger">There are no enrolled students for current classes</p>
+}
+else
+{
+    <div class="row">
+        <table class="table table-light table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th></th>
+                    <th>Student</th>
+                    <th>Class</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Student s in ViewBag.EnrolledStudents)
+                {
+                    <tr>
+                        <td style="width: 70px !important;">
+                            @if (s.IsCheckedIn)
+                            {
+                                <form asp-action="Checkout" asp-controller="AttendanceRecord">
+                                    <input hidden name="StudentID" value="@s.StudentID" />
+                                    <input id="scheduledClassFor_@s.StudentID" hidden name="ScheduledClassID" value="@s.ActiveAttendanceRecord.ScheduledClassID" />
+                                    <input type="submit" class="btn btn-dark" value="Out">
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-action="Checkin" asp-controller="AttendanceRecord">
+                                    <input hidden name="StudentID" value="@s.StudentID" />
+                                    <input id="scheduledClassFor_@s.StudentID" hidden asp-for="ScheduledClassID" value="" />
+                                    <input type="submit" class="btn btn-success" value="In">
+                                </form>
+                            }
+                        </td>
+                        <td style="width: 400px">@s.LastName, @s.FirstName</td>
+                        <td>
+                            @if (s.IsCheckedIn)
+                            {
+                                <input readonly value="@s.ActiveAttendanceRecord.ScheduledClass.Name" class="form-control" />
+                            }
+                            else
+                            {
+                                <select id="selector_@s.StudentID" class="scheduledClassSelector form-control" onchange="SetScheduledClass(@s.StudentID)" asp-for="ScheduledClassID"
+                                        asp-items="@ViewBag.ActiveScheduledClasses">
+                                </select>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        @{
+            var prevDisabled = !ViewBag.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !ViewBag.HasNextPage ? "disabled" : "";
+        }
+
+        <a asp-action="Checkin"
+           asp-route-pageNumber="@(ViewBag.PageIndex - 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+           class="btn btn-secondary mr-2 @prevDisabled">
+            Previous
+        </a>
+
+        Page @ViewBag.PageIndex of @ViewBag.TotalPages
+
+
+        <a asp-action="Checkin"
+           asp-route-pageNumber="@(ViewBag.PageIndex + 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+           class="btn btn-secondary mr-2 @nextDisabled">
+            Next
+        </a>
+    </div>
+}
+
+<h3>Other Students</h3>
+@if (notEnrolledStudents == null || !notEnrolledStudents.Any())
+{
+    <p class="text-center alert-danger">There are no students that have not already been included in the enrolled list</p>
+}
+else
+{
+    <div class="row">
+        <table class="table table-light table-hover table-bordered">
+            <thead>
+                <tr class="thead-dark">
+                    <th></th>
+                    <th>Student</th>
+                    <th>Class</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Student s in ViewBag.NotEnrolledStudents)
+                {
+                    <tr>
+                        <td style="width: 70px">
+                            @if (s.IsCheckedIn)
+                            {
+                                <form asp-action="Checkout" asp-controller="AttendanceRecord">
+                                    <input hidden name="StudentID" value="@s.StudentID" />
+                                    <input id="scheduledClassFor_@s.StudentID" hidden name="ScheduledClassID" value="@s.ActiveAttendanceRecord.ScheduledClassID" />
+                                    <input type="submit" class="btn btn-dark" value="Out">
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-action="Checkin" asp-controller="AttendanceRecord">
+                                    <input hidden name="StudentID" value="@s.StudentID" />
+                                    <input id="scheduledClassFor_@s.StudentID" hidden asp-for="ScheduledClassID" value="" />
+                                    <input type="submit" class="btn btn-success" value="In">
+                                </form>
+                            }
+                        </td>
+                        <td style="width: 400px">@s.LastName, @s.FirstName</td>
+                        <td>
+                            @if (s.IsCheckedIn)
+                            {
+                                <input readonly value="@s.ActiveAttendanceRecord.ScheduledClass.Name" class="form-control" />
+                            }
+                            else
+                            {
+                                <select id="selector_@s.StudentID" class="scheduledClassSelector form-control" onchange="SetScheduledClass(@s.StudentID)" asp-for="ScheduledClassID"
+                                        asp-items="@ViewBag.ActiveScheduledClasses">
+                                </select>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        @{
+            var prevDisabled = !ViewBag.HasPreviousPage2 ? "disabled" : "";
+            var nextDisabled = !ViewBag.HasNextPage2 ? "disabled" : "";
+        }
+
+        <a asp-action="Checkin"
+           asp-route-pageNumber2="@(ViewBag.PageIndex2 - 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+           class="btn btn-secondary mr-2 @prevDisabled">
+            Previous
+        </a>
+
+        Page @ViewBag.PageIndex2 of @ViewBag.TotalPages2
+
+
+        <a asp-action="Checkin"
+           asp-route-pageNumber2="@(ViewBag.PageIndex2 + 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+           class="btn btn-secondary mr-2 @nextDisabled">
+            Next
+        </a>
+    </div>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            var classSelectors = $('.scheduledClassSelector');
+            classSelectors.each(function () {
+                let studentID = this.id.replace("selector_", "");
+
+                let indexSelector = '#' + studentID;
+                let firstOption = indexSelector + ' option:first';
+                $(indexSelector).val($(firstOption).val())
+                SetScheduledClass(studentID);
+            });
+        });
+
+        function SetScheduledClass(studentID) {
+            let inputSelector = '#scheduledClassFor_' + studentID;
+            let selectElement = '#selector_' + studentID;
+            let selectedOption = 'select' + selectElement + ' option';
+            let selectedValue = $(selectedOption).filter(':selected').val();
+            $(inputSelector).val(selectedValue);
+        }
+    </script>
+}

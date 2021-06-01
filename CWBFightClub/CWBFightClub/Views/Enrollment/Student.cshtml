@@ -1,0 +1,213 @@
+﻿@model Student
+
+@{
+    bool noLogin = ViewBag.noLogin;
+    ViewBag.StudentID = Model.StudentID;
+
+    <!-- Set the Title whether user is logged in -->
+    if (noLogin == false)
+    {
+        ViewData["Title"] = "Student Enrollments";
+    }
+    else
+    {
+        ViewData["Title"] = "New Student Enrollment";
+    }
+}
+
+<input hidden id="studentID" value="@Model.StudentID" />
+<div hidden id="EnrollmentDetail">@ViewBag.EnrollmentDetail</div>
+
+<!-- If user is logged in, add the profile tabs -->
+@if (noLogin == false)
+{
+    <div class="row">
+        <div class="col-md-10">
+
+        </div>
+
+        <!-- Edit Menu Buttons -->
+
+        <div class="container" id="editstudent_tabmenu">
+            <ul class="nav nav-tabs">
+
+                <li>
+                    <a asp-action="Edit" asp-controller="Student" asp-route-id="@Model.StudentID">
+                        <div class="button" id="editbtn">
+                            <div id="translate"></div>
+                            <div id="buttonani">Details</div>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-action="Student" asp-controller="Payment" asp-route-id="@Model.StudentID">
+                        <div class="button" id="paymentbtn">
+                            <div id="translate"></div>
+                            <div id="buttonani">Payments</div>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <div class="button" id="discbtn">
+                        Disciplines
+                        <div class="btnsel_line"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <a asp-action="Attendance" asp-controller="Student" asp-route-studentId="@Model.StudentID">
+                        <div class="button" id="historybtn">
+                            <div id="translate"></div>
+                            <div id="buttonani">Attendance</div>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-action="Index" asp-controller="Attachments" asp-route-studentid="@Model.StudentID">
+                        <div class="button" id="documentsbtn">
+                            <div id="translate"></div>
+                            <div id="buttonani">Attachments</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Student" asp-controller="Guardian" asp-route-studentid="@Model.StudentID">
+                        <div class="button" id="guardianbtn">
+                            <div id="translate"></div>
+                            <div id="buttonani">Guardians</div>
+                        </div>
+                    </a>
+                </li>
+
+            </ul>
+            <br>
+        </div>
+    </div>
+}
+@if (!Model.Enrollments.Any())
+{
+    <div class="hideOnClick badge-success text-center">No disciplines currently enrolled. Add an enrollment with the 'Add Enrollment' button.</div>
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="text-center">Disciplines Enrolled in by @Model.FirstName @Model.LastName</h2>
+    </div>
+</div>
+
+<br />
+
+@if (Model.Enrollments.Any())
+{
+    <p>Payment Schedule: @Model.PaymentAgreenmentPeriod.ToDescription()</p>
+}
+
+<div class="row">
+
+    <div class="col-md-4">
+        @foreach (var x in Model.Enrollments)
+        {
+            string borderColor = (x.EndDate == null || x.EndDate > DateTime.Now) ? "green" : "red";
+            <div class="card enrollmentCard" style="border: 2px solid @borderColor;">
+                <!-- If the student is added without a logged in instructor, do not render edit button -->
+                @if (noLogin == false)
+                {
+                    <a onclick="ShowEnrollmentEdit(@x.EnrollmentID);" class="editEnrollmentButton btn btn-sm btn-outline-secondary">Edit</a>
+                }
+
+                @if (borderColor == "red")
+                {
+                    <span class="inActiveCornerLabel">INACTIVE</span>
+                }
+                <div class="card-body">
+                    <h3 class="text-center">@x.Discipline.Name</h3>
+                    <!-- If the student is added without a logged in instructor, do not render details modal -->
+                    @if (noLogin == false)
+                    {
+                        <a onclick="ShowEnrollmentDetail(@x.EnrollmentID);" class="stretched-link"></a>
+                    }
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+
+                        @if (x.EndDate != null)
+                        {
+                            <div class="col-5"><span class="d-block text-right">Start</span></div>
+                            <div class="col-2">&horbar;</div>
+                            <div class="col-5">End</div>
+                        }
+                        else
+                        {
+                            <div class="col-12"><span class="d-block text-center">Start</span></div>
+                        }
+                        @if (x.EndDate != null)
+                        {
+                            <div class="col-5"><span class="d-block text-right">@x.StartDate.ToString("d")</span></div>
+                            <div class="col-2">&horbar;</div>
+                            <div class="col-5">@x.EndDate.Value.ToString("d")</div>
+                        }
+                        else
+                        {
+                            <div class="col-12"><span class="d-block text-center">@x.StartDate.ToString("d")</span></div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-8">
+        @if (Model.Enrollments.Any() && noLogin == false)
+        {
+            <div id="watermarkDiv" class="hideOnClick">
+                <span id="selectWaterMark" class="moreInfoWatermark">Select a discipline for more information.</span>
+            </div>
+        }
+
+        <div id="AddEnrollmentDiv" class="d-none hideOnClick">
+        </div>
+        <div id="EditEnrollmentDiv" class="d-none hideOnClick">
+        </div>
+        <div id="DetailsEnrollmentDiv" class="d-none hideOnClick">
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.FromStudentWorkflow)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="badge-dark p-2">When finished adding enrollments proceed to add guardians or finish.</div>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-md-4">
+        <div class="justify-content-between d-flex btn-group mt-2">
+            <button style="max-width: 150px;" class="btn btn-primary mr-2" type="button" data-toggle="modal" data-target="#staticBackdrop">
+                Add Enrollment
+            </button>
+            @if (ViewBag.FromStudentWorkflow)
+            {
+                <a style="" class="btn btn-primary mr-2" asp-action="Student" asp-controller="Guardian" asp-route-studentid="@Model.StudentID" asp-route-fromStudentWorkflow="true">Add Guardian</a>
+                @if (noLogin)
+                {
+                    <a style="" class="btn btn-primary" asp-action="Signin" asp-route-fromStudentWorkflow="true" asp-controller="Account">Finish</a>
+                }
+                else
+                {
+                    <a style="" class="btn btn-primary" asp-action="Student" asp-route-fromStudentWorkflow="true" asp-controller="Payment" asp-route-id="@Model.StudentID">Finish</a>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+<partial name="~/Views/Enrollment/_AddFromStudent.cshtml" view-data='@new ViewDataDictionary(ViewData) { {"FromWorkflow", ViewBag.FromStudentWorkflow } }'/>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/studentEnrollment.js"></script>
+}

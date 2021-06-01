@@ -1,0 +1,104 @@
+﻿@model Guardian
+
+@{ ViewData["Title"] = "Edit Guardian"; }
+
+<div class="row">
+    <div class="col-md-10">
+
+    </div>
+
+    <!-- Edit Menu Buttons -->
+
+    <div class="container" id="editstudent_tabmenu">
+    </div>
+</div>
+<h4>Edit Guardian</h4>
+<hr />
+
+<form asp-action="Edit" id="validForm">
+    <div class="row">
+        <div class="col-md-5">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="GuardianID" />
+            <input type="hidden" name="studentguardianid" value="@ViewBag.studentguardianid" />
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MiddleName" class="control-label"></label>
+                <input asp-for="MiddleName" class="form-control" />
+                <span asp-validation-for="MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StreetAddress" class="control-label"></label>
+                <input asp-for="StreetAddress" class="form-control" />
+                <span asp-validation-for="StreetAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ZIP" class="control-label"></label>
+                <input asp-for="ZIP" class="form-control" />
+                <span asp-validation-for="ZIP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Relationship" class="control-label"></label>
+                <input asp-for="Relationship" class="form-control" />
+                <span asp-validation-for="Relationship" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" asp-for="IsPrimary" class="form-check-inline" />
+                <label asp-for="IsPrimary" class="control-label"></label>
+            </div>
+            <br />
+            <div class="form-group" style="margin-top: 10px">
+                <input style="float:right" type="submit" value="Save" class="btn btn-primary" />
+                <input hidden name="studentid" value="@ViewBag.studentid" />
+                <div style="float:right; margin-right: 10px">
+                    @if (TempData["FromStudentWorkflow"] != null && bool.Parse(TempData["FromStudentWorkflow"].ToString()))
+                    {
+        <a class="btn btn-secondary" asp-controller="guardian" asp-route-fromStudentWorkflow="true" asp-action="Student" asp-route-studentid="@ViewBag.studentid">Back to List</a> }
+    else
+    {
+<a class="btn btn-secondary" asp-controller="guardian" asp-action="Student" asp-route-studentid="@ViewBag.studentid">Back to List</a>}
+                </div>
+                <div style="float:right; margin-right: 10px">
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-studentid="@ViewBag.studentid"
+                       asp-route-studentguardianid="@ViewBag.studentguardianid" asp-route-id="@Model.GuardianID">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>formValIndicator();</script>
+}

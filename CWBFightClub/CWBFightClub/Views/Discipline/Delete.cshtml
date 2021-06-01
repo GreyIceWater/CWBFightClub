@@ -1,0 +1,69 @@
+﻿@model Discipline
+
+@{
+    ViewData["Title"] = "Delete Discipline";
+}
+
+<h2>Delete Discipline</h2>
+<h4>Really delete this discipline, all associated enrollments and associated belts?</h4>
+
+<div class="deletestudent_table">
+
+    <center>
+        <br />
+        <div class="container">
+            <h4 class="mx-auto">Discipline</h4>
+        </div>
+        <hr />
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+        </dl>
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </dl>
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DefaultCostPerMonth)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DefaultCostPerMonth)
+            </dd>
+        </dl>
+
+        <hr />
+
+        <div class="container" >            
+            <h4 class="mx-auto">Associated Belts</h4>
+            @{
+                await Html.RenderPartialAsync("~/Views/Belt/_BeltIndex.cshtml");
+            }
+            <script type="text/javascript">
+                var elements = document.getElementsByClassName("table-link");                
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].removeAttribute('href');
+                }                
+            </script>
+        </div>
+
+    </center>
+
+    <br />
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="DisciplineID" />
+        <input type="submit" value="Delete" class="btn btn-danger float-right" />
+        <a class="btn btn-secondary float-right mr-2 text-white" onclick="window.history.go(-1);">Back</a>
+    </form>
+</div>

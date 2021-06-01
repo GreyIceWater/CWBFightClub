@@ -1,0 +1,369 @@
+﻿@{
+    ViewData["Title"] = "Help";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 style="cursor:pointer;" onclick="$('#createstudent').slideToggle('slow');"><strong>How to create a student:</strong></h1>
+<div style="display:none;" id="createstudent">
+    <p>
+        When the website loads up, there is a “New Student” tab on the top. You do not have to be signed in for this.
+        Click on this tab to create a new student. Enter in all the required fields and click the “Create and Enroll” button.
+        It will take you to a screen where you have 3 options which are Add Enrollment, Add Guardian, or Finish. If you just
+        wanted to create the student, you can click the “Finish” button and it will take you back to the login screen. Creating
+        a student can also be done when logged into website and it is the same workflow.
+    </p>
+    <img style="width:90%;" src="~/Images/CreateStudent.gif" alt="Create Student" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#creatediscipline').slideToggle('slow');"><strong>How to create a discipline:</strong></h1>
+<div style="display:none;" id="creatediscipline">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Disciplines” tab. Once in the Disciplines tab, you need to click the “Add +” button and enter in all the
+        fields. Once the fields are filled out, click the “Create” button. Once you click the create button, it will take you back to the list
+        of all the disciplines.
+    </p>
+    <img style="width:90%;" src="~/Images/CreateDiscipline.gif" alt="Create Discipline" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#createbelt').slideToggle('slow');"><strong>How to create a belt:</strong></h1>
+<div style="display:none;" id="createbelt">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Disciplines” tab. Once in the Disciplines tab, you need to click on what discipline you want to add the
+        belt to. When you click on the discipline you want, on the right hand side it shows the list of belts linked to that discipline.
+        You need to click the “Add +” button and enter in all the fields. Once the fields are filled out, click the “Create” button.
+        Once you click the create button, it will take you back to the list of all the belts showing on the right hand side.
+    </p>
+    <img style="width:90%;" src="~/Images/CreateBelt.gif" alt="Create Belt" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#createguardian').slideToggle('slow');"><strong>How to create a guardian:</strong></h1>
+<div style="display:none;" id="createguardian">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to add a guardian for. It will pull up with the edit page and on the top there
+        are some tabs. You will want to click the “Guardians” tab. Once there, you will see an “ADD +” button. You will click that and it will
+        bring you a page to enter in the required fields. Once the fields are all filled in, click the “Create” button.
+        Once you click the create button, it will take you back to the list of guardians for this student with the new one added.
+    </p>
+    <img style="width:90%;" src="~/Images/CreateGuardian.gif" alt="Create Guardian" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#createinstructor').slideToggle('slow');"><strong>How to create an instructor:</strong></h1>
+<div style="display:none;" id="createinstructor">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Instructors” tab. Once in the Instructors tab, you need to click the “Add +” button and enter in all the fields.
+        There has to be a student that is also an instructor in order to create an instructor account, otherwise it will show an error saying There are
+        no instructors that need accounts. Once the fields are filled out, click the “Create” button. Once you click the create button, it
+        will take you back to the list of all the instructors.
+    </p>
+    <img style="width:90%;" src="~/Images/CreateInstructor.gif" alt="Create Instructor" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#viewstudentpayment').slideToggle('slow');"><strong>How to view students payments:</strong></h1>
+<div style="display:none;" id="viewstudentpayment">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to see the payments for. It will pull up with the edit page and on the top
+        there are some tabs. You will want to click the “Payments” tab. Once there, you will see the list of students payments in the past.
+    </p>
+    <img style="width:90%;" src="~/Images/ViewStudentPayment.gif" alt="View Student Payment" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#addstudentpayment').slideToggle('slow');"><strong>How to add a payment for students:</strong></h1>
+<div style="display:none;" id="addstudentpayment">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to add a payment for. It will pull up with the edit page and on the top
+        there are some tabs. You will want to click the “Payments” tab. Once there, in the top left you will see a button that
+        says “Add Payment”. You will click that button and it will pop up to enter in an amount and a date to keep track of the payment in the
+        future. Once that information is entered in, you click “Add” and it will take you back to the list of payments on the student.
+    </p>
+    <img style="width:90%;" src="~/Images/AddStudentPayment.gif" alt="Add Payment for Students" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#viewstudentsdisciplines').slideToggle('slow');"><strong>How to view students disciplines:</strong></h1>
+<div style="display:none;" id="viewstudentsdisciplines">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to see what disciplines they are in. It will pull up with the edit page and
+        on the top there are some tabs. You will want to click the “Disciplines” tab. Once there, you will see the list of disciplines
+        that the student is enrolled in.
+    </p>
+    <img style="width:90%;" src="~/Images/ViewStudentsDisciplines.gif" alt="View Students Disciplines" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#addstudentenrollmentdiscipline').slideToggle('slow');"><strong>How to add an enrollment for student to a discipline:</strong></h1>
+<div style="display:none;" id="addstudentenrollmentdiscipline">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to enroll in a discipline for. It will pull up with the edit page and on
+        the top there are some tabs. You will want to click the “Disciplines” tab. Once there, you will see an “Add Enrollment” button
+        in the top right hand side. You click that button and it will pop up to enter a start date and it gives the options of what
+        disciplines are offered to enroll in. Once that information is entered in, you click the “Add” button and it will take you
+        back to the list of disciplines the student is enrolled in.
+    </p>
+    <img style="width:90%;" src="~/Images/AddStudentEnrollmentDiscipline.gif" alt="Add Student Enrollment Discipline" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#viewstudentsguardians').slideToggle('slow');"><strong>How to view a students guardians:</strong></h1>
+<div style="display:none;" id="viewstudentsguardians">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to see their guardians for. It will pull up with the edit page and on the
+        top there are some tabs. You will want to click the “Guardians” tab. It then shows you a list of the guardians for this student.
+    </p>
+    <img style="width:90%;" src="~/Images/ViewStudentsGuardians.gif" alt="View Students Guardians" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#addalreadycreatedguardiantostudent').slideToggle('slow');"><strong>How to add an already created guardian to another student:</strong></h1>
+<div style="display:none;" id="addalreadycreatedguardiantostudent">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to add an already created guardian for. It will pull up with the edit page
+        and on the top there are some tabs. You will want to click the “Guardians” tab. On the top it shows a drop down list, you click
+        the down arrow and select who you want to add for this student. Once you selected the guardian you want to add, click the “save”
+        button and it will add the guardian to the current list.
+    </p>
+    <img style="width:90%;" src="~/Images/AddAlreadyCreatedGuardianToStudent.gif" alt="Add Already Created Guardian To Student" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#editstudent').slideToggle('slow');"><strong>How to edit a student:</strong></h1>
+<div style="display:none;" id="editstudent">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to edit. You will edit what field you want to change and click the “Save”
+        button. Once you click the save button, it will take you back to the list of all the students.
+    </p>
+    <img style="width:90%;" src="~/Images/EditStudent.gif" alt="Edit Student" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#deletestudent').slideToggle('slow');"><strong>How to delete a student:</strong></h1>
+<div style="display:none;" id="deletestudent">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to delete. You will then click the “Delete” button. Once you click the delete
+        button, it will take you to another screen making sure you want to delete this student. If you are sure, then click the “Delete”
+        button again. Once you click the delete button again, it will take you back to the list of students.
+    </p>
+    <img style="width:90%;" src="~/Images/DeleteStudent.gif" alt="Delete Student" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#editdiscipline').slideToggle('slow');"><strong>How to edit a discipline:</strong></h1>
+<div style="display:none;" id="editdiscipline">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Disciplines” tab.  You will then need to click on what discipline you want to edit. You will edit
+        what field you want to change and click the “Save” button. Once you click the save button, it will take you back to the list
+        of all the disciplines.
+    </p>
+    <img style="width:90%;" src="~/Images/EditDiscipline.gif" alt="Edit Discipline" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#deletediscipline').slideToggle('slow');"><strong>How to delete a discipline:</strong></h1>
+<div style="display:none;" id="deletediscipline">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Disciplines” tab. You will then need to click on what discipline you want to delete. You will
+        then click the “Delete” button. Once you click the delete button, it will take you to another screen making sure you want to
+        delete this discipline. If you are sure, then click the “Delete” button again. Once you click the delete button again, it will
+        take you back to the list of disciplines.
+    </p>
+    <img style="width:90%;" src="~/Images/DeleteDiscipline.gif" alt="Delete Discipline" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#editbelt').slideToggle('slow');"><strong>How to edit a belt:</strong></h1>
+<div style="display:none;" id="editbelt">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Disciplines” tab.   You will then need to click on what discipline the belt is associated with that
+        you want to edit. Then you will click on the belt you want to edit that is listed on the right hand side. You will edit what field
+        you want to change and click the “Save” button. Once you click the save button, it will take you back to the list of all the belts.
+    </p>
+    <img style="width:90%;" src="~/Images/EditBelt.gif" alt="Edit Belt" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#deletebelt').slideToggle('slow');"><strong>How to delete a belt:</strong></h1>
+<div style="display:none;" id="deletebelt">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Disciplines” tab.   You will then need to click on what discipline the belt is associated with that
+        you want to delete. Then you will click on the belt you want to delete that is listed on the right hand side. You will then click
+        the “Delete” button. Once you click the delete button, it will take you to another screen making sure you want to delete this belt.
+        If you are sure, then click the “Delete” button again. Once you click the delete button again, it will take you back to the list of
+        belts.
+    </p>
+    <img style="width:90%;" src="~/Images/DeleteBelt.gif" alt="Delete Belt" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#editinstructor').slideToggle('slow');"><strong>How to edit an instructor:</strong></h1>
+<div style="display:none;" id="editinstructor">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Instructors” tab.  You will then need to click on what instructor you want to edit. You will edit what
+        field you want to change and click the “Save” button. Once you click the save button, it will take you back to the list of all
+        the instructors.
+    </p>
+    <img style="width:90%;" src="~/Images/EditInstructor.gif" alt="Edit Instructor" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#deleteinstructor').slideToggle('slow');"><strong>How to delete an instructor:</strong></h1>
+<div style="display:none;" id="deleteinstructor">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Instructors” tab. You will then need to click on what account you want to delete. You will then click
+        the “Delete” button. Once you click the delete button, it will take you to another screen making sure you want to delete this
+        instructor. If you are sure, then click the “Delete” button again. Once you click the delete button again, it will take you back to
+        the list of instructors.
+    </p>
+    <img style="width:90%;" src="~/Images/DeleteInstructor.gif" alt="Delete Instructor" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#studentcheckin').slideToggle('slow');"><strong>How to check in a student for a class:</strong></h1>
+<div style="display:none;" id="studentcheckin">
+    <p>
+        When the website loads up, there is a “Checkin” tab on the top. You do not have to be signed in for this. Click that and it
+        will bring you to a page to check students in. You will want to find what student you want to check in and select what class.
+        Once you have that information correctly, you can click the “In” button and you are checked in.
+    </p>
+    <img style="width:90%;" src="~/Images/StudentCheckin.gif" alt="Student Checkin" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#addhistoricalattendancerecords').slideToggle('slow');"><strong>How to add historical attendance records:</strong></h1>
+<div style="display:none;" id="addhistoricalattendancerecords">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, on the top right hand corner you will see a 3 bars
+        button. Click that and it will show you options to select “Attendance Records”. Once there, you will see a “Create Record” button.
+        Click that and fill in the information required. Once you have filled in the information, click “Add” and it will be added to the
+        list of already created records on the screen.
+    </p>
+    <img style="width:90%;" src="~/Images/AddHistoricalAttendanceRecords.gif" alt="Add Historical Attendance Records" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#edithistoricalattendancerecords').slideToggle('slow');"><strong>How to edit historical attendance records:</strong></h1>
+<div style="display:none;" id="edithistoricalattendancerecords">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, on the top right hand corner you will see a 3 bars
+        button. Click that and it will show you options to select “Attendance Records”. Once there, you will see a the list of records that
+        are created. You will select the record that you want to edit and click the "Edit" button. Then you will edit the information you want
+        to edit and click the "Save" button. The list will then appear again and the record you edited will be updated.
+    </p>
+    <img style="width:90%;" src="~/Images/EditHistoricalAttendanceRecords.gif" alt="Edit Historical Attendance Records" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#deletehistoricalattendancerecords').slideToggle('slow');"><strong>How to delete historical attendance records:</strong></h1>
+<div style="display:none;" id="deletehistoricalattendancerecords">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, on the top right hand corner you will see a 3 bars
+        button. Click that and it will show you options to select “Attendance Records”. Once there, you will see a the list of records that
+        are created. You will select the record that you want to delete and click the "Delete" button. Once you click the delete button, it will
+        take you to another screen making sure you want to delete this record. If you are sure, then click the “Delete” button again. Once you
+        click the delete button again, it will take you back to the list of records.
+    </p>
+    <img style="width:90%;" src="~/Images/DeleteHistoricalAttendanceRecords.gif" alt="Delete Historical Attendance Records" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#addclasstocalendar').slideToggle('slow');"><strong>How to create a class on the calendar:</strong></h1>
+<div style="display:none;" id="addclasstocalendar">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Classes” tab. Once you are there, you can click anywhere on the calendar and it will give you an option
+        to make a class. You will enter in the information that is needed for this and click the "save" button. It will then appear on the
+        calendar.
+    </p>
+    <img style="width:90%;" src="~/Images/AddClassToCalendar.gif" alt="Add Class To Calendar" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#editclassoncalendar').slideToggle('slow');"><strong>How to edit a class on the calendar:</strong></h1>
+<div style="display:none;" id="editclassoncalendar">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Classes” tab. Once you are there, you can click on the class on the calendar that you want to edit
+        and it will give you an option to edit the class. You will edit the information that you would like to edit and click the "update"
+        button. It will then appear on the calendar.
+    </p>
+    <img style="width:90%;" src="~/Images/EditClassOnCalendar.gif" alt="Edit Class On Calendar" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#deleteclassoncalendar').slideToggle('slow');"><strong>How to delete a class on the calendar:</strong></h1>
+<div style="display:none;" id="deleteclassoncalendar">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Classes” tab. Once you are there, you can click on the class on the calendar that you want to delete
+        and it will give you an option to delete the class. If you click the "delete" button the class will disappear from the calendar.
+    </p>
+    <img style="width:90%;" src="~/Images/DeleteClassOnCalendar.gif" alt="Delete Class On Calendar" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#uploaddocumentforstudent').slideToggle('slow');"><strong>How to upload a document for a student:</strong></h1>
+<div style="display:none;" id="uploaddocumentforstudent">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to upload a document for. It will pull up with the edit page and on the top
+        there are some tabs. You will want to click the “Attachments” tab. It pulls up a form to fill out in order to upload the document. Once
+        that is filled out, click the "Create" button. It will then appear below the form for the student on that same page.
+    </p>
+    <img style="width:90%;" src="~/Images/UploadDocumentForStudent.gif" alt="Upload Document For Student" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#editdocumentforstudent').slideToggle('slow');"><strong>How to edit an uploaded document for a student:</strong></h1>
+<div style="display:none;" id="editdocumentforstudent">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to upload a document for. It will pull up with the edit page and on the top
+        there are some tabs. You will want to click the “Attachments” tab. It pulls up a form, and under the form is the document that was uploaded
+        for the student. You can click the "Edit" button and edit whatever is needed to be changed. Once the edit is complete, click "Save" and it will
+        take you back to the previous page showing you the updated document.
+    </p>
+    <img style="width:90%;" src="~/Images/EditDocumentForStudent.gif" alt="Edit Document For Student" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#deletedocumentforstudent').slideToggle('slow');"><strong>How to delete an uploaded document for a student:</strong></h1>
+<div style="display:none;" id="deletedocumentforstudent">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will then need to click on what student you want to upload a document for. It will pull up with the edit page and on the top
+        there are some tabs. You will want to click the “Attachments” tab. It pulls up a form, and under the form is the document that was uploaded
+        for the student. You can click the "Delete" button. Once you click the delete button, it will take you to another screen making sure you
+        want to delete this document. If you are sure, then click the “Delete” button again. Once you click the delete button again, it will take
+        you back to the previous page showing just a form to upload for the student.
+    </p>
+    <img style="width:90%;" src="~/Images/DeleteDocumentForStudent.gif" alt="Delete Document For Student" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#createattendancerecord').slideToggle('slow');"><strong>How to Create Attendance Records:</strong></h1>
+<div style="display:none;" id="createattendancerecord">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Admin” tab. Then you will click on the “Attendance Records” box. Once on that page you will 
+        click the “Create Record” button. Then you will have to select what student you would like to run the report for and all
+        the other information required for this. Once the information is entered, click the “Add” button. Then the record will
+        appear on the screen for you to see.
+    </p>
+    <img style="width:90%;" src="~/Images/CreateAttendanceRecord.gif" alt="Create Attendance Record" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#createreports').slideToggle('slow');"><strong>How to Create Reports:</strong></h1>
+<div style="display:none;" id="createreports">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students 
+        automatically. You will have to click the “Admin” tab. Then you will click on the “Report Center” box. You can 
+        select which report you would like to run out of the report categories. For this example, I selected the “Attendance”
+        report. Once selecting the report category, enter in the information that you would like to see and click “Generate Report”.
+        Once you click that, the results will appear.
+    </p>
+    <img style="width:90%;" src="~/Images/CreateReports.gif" alt="Create Reports" />
+</div>
+
+<h1 style="cursor:pointer;" onclick="$('#savesettings').slideToggle('slow');"><strong>How to Save Settings:</strong></h1>
+<div style="display:none;" id="savesettings">
+    <p>
+        First thing you will need to do is sign into the website. Once you sign in, it pulls up the list of students automatically.
+        You will have to click the “Admin” tab. Then you will click on the “Settings” box. There are select options that you can
+        change such as changing the amount of a gym package. Once changing something in the settings, click “Save” and it will 
+        save and change for the whole website.
+    </p>
+    <img style="width:90%;" src="~/Images/SaveSettings.gif" alt="Save Settings" />
+</div>

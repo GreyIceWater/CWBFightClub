@@ -1,0 +1,201 @@
+﻿@model Discipline
+
+@{
+    ViewData["Title"] = "Discipline Enrollments";
+    ViewBag.DisciplineID = Model.DisciplineID;
+
+    List<Enrollment> activeEnrollments = ViewBag.EnrolledStudents;
+    List<Enrollment> inactiveEnrollments = ViewBag.NotEnrolledStudents;
+}
+
+<input hidden id="disciplineID" value="@Model.DisciplineID" />
+
+<div hidden id="EnrollmentDetail">@ViewBag.EnrollmentDetail</div>
+
+<div class="row">
+    <div class="col-md-10">
+
+    </div>
+
+    <!-- Edit Menu Buttons -->
+
+    <div class="container" id="editstudent_tabmenu">
+        <ul class="nav nav-tabs">
+
+            <li>
+                <a asp-action="Edit" asp-controller="Discipline" asp-route-id="@Model.DisciplineID">
+                    <div class="button" id="editbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Edit</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <div class="button" id="paymentbtn">
+                    Enrollments
+                    <div class="btnsel_line"></div>
+                </div>
+            </li>
+        </ul>
+        <br>
+    </div>
+</div>
+<div class="">
+    <button class="btn btn-sm btn-primary mb-2" type="button" data-toggle="modal" data-target="#staticBackdrop">
+        Add Enrollment
+    </button>
+    <h3 class="text-center font-weight-bold">@Model.Name</h3>
+</div>
+<div class="row mb-2">
+    <div class="col-6">
+    </div>
+    <div class="col-6">
+        <div class="container">
+            <form class="form-inline float-right" method="get" asp-action="Discipline" asp-controller="Enrollment">
+                <input hidden name="id" value="@Model.DisciplineID"/>
+                <input class="form-control" name="searchString" asp-for="@ViewData["CurrentSearch"]" placeholder="Search" />
+                <div class="ml-2 btn-group">
+                    <button class="mr-2 btn btn-sm btn-primary" type="submit">Search</button>
+                    <a asp-action="Discipline" asp-route-id="@Model.DisciplineID" class="mr-2 btn btn-sm btn-secondary">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h3 style="color: darkgreen;" class="text-center font-weight-bold">Active</h3>
+        @if (activeEnrollments.Any())
+        {
+            <table class="table table-light table-borderless table-hover">
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Enrollment Date</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in activeEnrollments)
+                    {
+                        <tr>
+                            <td>@x.Student.FirstName @x.Student.LastName</td>
+                            <td>
+                                @x.StartDate.ToString("d")
+                                @if (x.EndDate != null)
+                                {
+                                    <span>&horbar; @x.EndDate.Value.ToString("d")</span>
+                                }
+                            </td>
+                            <td>
+                                <a style="border-radius: 10px;" class="btn btn-sm btn-outline-secondary" asp-route-id="@x.StudentID"
+                                   asp-route-enrollmentID="@x.EnrollmentID" asp-action="Student" asp-controller="Enrollment">edit</a>
+                            </td>
+                            <td>
+                                <a asp-action="CancelStudentEnrollment" style="border-radius: 10px;"
+                                   asp-controller="Enrollment" asp-route-id="@x.EnrollmentID" class="btn btn-sm btn-outline-danger">cancel</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="text-center">
+                @{
+                    var prevDisabled = !ViewBag.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !ViewBag.HasNextPage ? "disabled" : "";
+                }
+
+                <a asp-action="Discipline" asp-controller="Enrollment" asp-route-id="@Model.DisciplineID"
+                   asp-route-pageNumber="@(ViewBag.PageIndex - 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+                   class="btn btn-secondary mr-2 @prevDisabled">
+                    Previous
+                </a>
+
+                Page @ViewBag.PageIndex of @ViewBag.TotalPages
+
+
+                <a asp-action="Discipline" asp-controller="Enrollment" asp-route-id="@Model.DisciplineID"
+                   asp-route-pageNumber="@(ViewBag.PageIndex + 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+                   class="btn btn-secondary mr-2 @nextDisabled">
+                    Next
+                </a>
+            </div>
+        }
+        else
+        {
+            <p class="text-center">No active student enrollments recorded.</p>
+        }
+    </div>
+    <div class="col-md-6">
+        <h3 style="color: darkred;" class="text-center font-weight-bold">Inactive</h3>
+        @if (inactiveEnrollments.Any())
+        {
+            <table class="table table-light table-borderless table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Enrollment Date</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in inactiveEnrollments)
+                    {
+                        <tr>
+                            <td>@x.Student.FirstName @x.Student.LastName</td>
+                            <td>
+                                @x.StartDate.ToString("d")
+                                <span>&horbar; @x.EndDate.Value.ToString("d")</span>
+                            </td>
+                            <td>
+                                <a style="border-radius: 10px;" class="btn btn-sm btn-outline-secondary" asp-route-id="@x.StudentID"
+                                   asp-route-enrollmentID="@x.EnrollmentID" asp-action="Student" asp-controller="Enrollment">edit</a>
+                            </td>
+                            <td>
+                                <a style="border-radius: 10px;" class="btn btn-sm btn-outline-success"
+                                   asp-action="RestartStudentEnrollmentFromDisc" asp-route-id="@x.EnrollmentID" asp-controller="Enrollment">re-enroll</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="text-center">
+                @{
+                    var prevDisabled = !ViewBag.HasPreviousPage2 ? "disabled" : "";
+                    var nextDisabled = !ViewBag.HasNextPage2 ? "disabled" : "";
+                }
+
+                <a asp-action="Discipline" asp-controller="Enrollment" asp-route-id="@Model.DisciplineID"
+                   asp-route-pageNumber2="@(ViewBag.PageIndex2 - 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+                   class="btn btn-secondary mr-2 @prevDisabled">
+                    Previous
+                </a>
+
+                Page @ViewBag.PageIndex2 of @ViewBag.TotalPages2
+
+
+                <a asp-action="Discipline" asp-controller="Enrollment" asp-route-id="@Model.DisciplineID"
+                   asp-route-pageNumber2="@(ViewBag.PageIndex2 + 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+                   class="btn btn-secondary mr-2 @nextDisabled">
+                    Next
+                </a>
+            </div>
+        }
+        else
+        {
+            <p class="text-center">No active student enrollments recorded.</p>
+        }
+    </div>
+</div>
+
+<partial name="~/Views/Enrollment/_AddFromDiscipline.cshtml" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/alterDateValidationForDOB.js"></script>
+    <script src="~/js/studentEnrollment.js"></script>
+}

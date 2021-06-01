@@ -1,0 +1,111 @@
+﻿@model Student
+
+@{
+    bool noLogin = ViewBag.noLogin;
+
+    if (noLogin == false)
+    {
+        ViewData["Title"] = "Student Entry";
+    }
+    else
+    {
+        ViewData["Title"] = "New Student";
+    }
+}
+<div class="row">
+    <div class="col-md-10">
+        <h4>Add a Student</h4>
+        <hr />
+    </div>
+</div>
+
+<form asp-action="Create" id="validForm">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MiddleName" class="control-label"></label>
+                <input asp-for="MiddleName" class="form-control" />
+                <span asp-validation-for="MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DOB" class="control-label"></label>
+                <input id="dob" type="date" asp-for="DOB" class="form-control" />
+                <span asp-validation-for="DOB" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StreetAddress" class="control-label"></label>
+                <input asp-for="StreetAddress" class="form-control" />
+                <span asp-validation-for="StreetAddress" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ZIP" class="control-label"></label>
+                <input asp-for="ZIP" class="form-control" />
+                <span asp-validation-for="ZIP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input placeholder="(###)###-####" asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            @if (!noLogin)
+            {
+                <div class="form-group">
+                    <input type="checkbox" asp-for="WaiverSigned" class="form-check-inline" />
+                    <label asp-for="WaiverSigned" class="control-label"></label>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" asp-for="IsInstructor" class="form-check-inline" />
+                    <label asp-for="IsInstructor" class="control-label"></label>
+                </div>
+            }
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="form-group" style="margin-top: 20px">
+                <input style="float:right" type="submit" value="Create and Enroll" class="btn btn-primary" />
+                <div style="float:right; margin-right: 10px">
+                    <a class="btn btn-secondary" asp-action="Signin" asp-controller="Account">Cancel</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/alterDateValidationForDOB.js"></script>
+    <script> formValIndicator(); </script>
+}

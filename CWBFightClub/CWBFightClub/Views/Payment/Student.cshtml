@@ -1,0 +1,202 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = "Payments";
+    ViewBag.StudentID = Model.StudentID;
+    decimal balanceDue = Model.BalanceDue ?? 0m;
+    decimal paymentAmount = Model.PaymentAgreementAmount ?? 0m;
+    DateTime balanceDueDate = Model.BalanceDueDate ?? DateTime.Now.AddMonths(1);
+    string balanceNote = Model.PaymentAgreementNote ?? string.Empty;
+}
+
+<div class="row">
+    <div class="col-md-10">
+
+    </div>
+
+    <!-- Edit Menu Buttons -->
+
+    <div class="container" id="editstudent_tabmenu">
+        <ul class="nav nav-tabs">
+
+            <li>
+                <a asp-action="Edit" asp-controller="Student" asp-route-id="@Model.StudentID">
+                    <div class="button" id="editbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Details</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <div class="button" id="paymentbtn">
+                    Payments
+                    <div class="btnsel_line"></div>
+                </div>
+            </li>
+
+            <li>
+                <a asp-action="Student" asp-controller="Enrollment" asp-route-id="@Model.StudentID">
+                    <div class="button" id="discbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Disciplines</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Attendance" asp-controller="Student" asp-route-studentId="@Model.StudentID">
+                    <div class="button" id="historybtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Attendance</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Index" asp-controller="Attachments" asp-route-studentid="@Model.StudentID">
+                    <div class="button" id="documentsbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Attachments</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Student" asp-controller="Guardian" asp-route-studentid="@Model.StudentID">
+                    <div class="button" id="guardianbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Guardians</div>
+                    </div>
+                </a>
+            </li>
+
+        </ul>
+        <br>
+    </div>
+</div>
+@if (!Model.Payments.Any())
+{
+    <div class="hideOnClick text-center badge-success">No payments currently recorded. Add a payment with the 'Add Payment' button.</div>
+}
+<br />
+
+<div class="row">
+    <div class="col-md-2">
+        <button id="modalShowButtonAdd" class="btn btn-sm btn-primary mb-2" type="button" data-toggle="modal" data-target="#staticBackdrop">
+            Add Payment
+        </button>
+    </div>
+    <div class="col-md-5">
+        <h2 class="">Payment Records for<br /> @Model.FirstName @Model.LastName</h2>
+    </div>
+    <div class="col-md-5">
+        <form class="form" asp-action="EditBalance" asp-controller="Payment">
+            <input hidden asp-for="StudentID" value="@Model.StudentID" />
+            <div class="form-group row">
+                <label asp-for="BalanceDue" class="col-form-label col-sm-4">Balance Owed</label>
+                <div class="col-sm-8">
+                    <input class="form-control balanceInput" asp-for="BalanceDue" type="number" step=".01" value="@balanceDue" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PaymentAgreementAmount" class="col-form-label col-sm-4">Payment</label>
+                <div class="col-sm-8">
+                    <input class="form-control balanceInput" asp-for="PaymentAgreementAmount" value="@paymentAmount" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BalanceDueDate" class="col-form-label col-sm-4">Due Date</label>
+                <div class="col-sm-8">
+                    <input class="form-control balanceInput" asp-for="BalanceDueDate" type="date" value="@balanceDueDate.ToString("yyyy-MM-dd")" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PaymentAgreenmentPeriod" class="col-form-label col-sm-4">Payment Plan</label>
+                <div class="col-sm-8">
+                    <select disabled class="form-control balanceSelect" asp-for="PaymentAgreenmentPeriod" asp-items="Html.GetEnumSelectList<PaymentPeriod>()"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PaymentAgreenmentPeriod" class="col-form-label col-sm-4">Notes</label>
+                <div class="col-sm-8">
+                    <textarea readonly class="form-control balanceInput" asp-for="PaymentAgreementNote">@balanceNote</textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+
+                </div>
+                <div class="col-6">
+                    <a style="float: right;" class="btn btn-sm btn-primary" id="editBalanceButton" onclick="EditBalance();">Edit</a>
+                    <input id="saveBalanceButton" style="display: none; float: right;" type="submit" value="Save" class="btn btn-sm btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<br />
+
+@if (Model.Payments.Any())
+{
+    <div class="row">
+        <div class="col-6">
+            <table class="table table-hover table-light">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model.Payments)
+                    {
+                        <tr style="cursor: pointer" onclick="ShowPaymentEdit(@x.PaymentID);">
+                            <td>@x.ReceivedDate.ToString("d")</td>
+                            <td>@x.Amount.ToString("C")</td>
+                            @if (x.Note == null)
+                            {
+                                <td></td>
+                            }
+                            else if (x.Note.Length < 30)
+                            {
+                                <td>@x.Note</td>
+                            }
+                            else
+                            {
+                                <td>@x.Note.Substring(0, 30)...</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            @if (Model.Payments.Any())
+            {
+                <div id="watermarkDiv" class="hideOnClick">
+                    <span id="selectWaterMark" class="moreInfoWatermark">Select a payment for more information.</span>
+                </div>
+            }
+            <div id="EditPaymenttDiv" class="d-none hideOnClick">
+            </div>
+        </div>
+    </div>
+}
+
+<div id="addPaymentDiv">
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        @{
+            await Html.RenderPartialAsync("~/Views/Payment/_Add.cshtml", new Payment());
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/payment.js"></script>
+}

@@ -1,0 +1,71 @@
+﻿@model Enrollment
+
+@{ 
+    string status = (Model.EndDate == null || Model.EndDate > DateTime.Now) ? "Active" : "Inactive";
+    string statusColor = (Model.EndDate == null || Model.EndDate > DateTime.Now) ? "darkgreen" : "darkred";
+    string borderColor = (Model.EndDate == null || Model.EndDate > DateTime.Now) ? "green" : "red";
+}
+
+<form class="form" asp-action="Edit" asp-controller="Enrollment">
+    <input type="hidden" asp-for="EnrollmentID" />
+    <input type="hidden" asp-for="StudentID" />
+    <div class="card enrollmentCard" style="border: 2px solid @borderColor;">
+        <a asp-action="Delete" asp-route-id="@Model.EnrollmentID" class="editEnrollmentButton btn btn-sm btn-outline-danger">Delete</a>
+        <div class="card-header">
+            <h2>Edit @Model.Discipline.Name Enrollment</h2>
+            <h4>Current Status: <span style="color: @statusColor">@status</span></h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <label asp-for="StartDate">Start</label>
+                </div>
+                <div class="col-6">
+                    @if (Model.EndDate != null)
+                    {
+                        <label asp-for="EndDate">End</label>
+                    }
+                    else
+                    {
+                        <label id="EnrollmentEndLabel_@Model.EnrollmentID" asp-for="EndDate" class="d-none">End</label>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <input onchange='ValidateEndDate(@Model.EnrollmentID);' id="EnrollmentStartID_@Model.EnrollmentID" type="date" asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    @if (Model.EndDate != null)
+                    {
+                        <input onchange='ValidateEndDate(@Model.EnrollmentID);' id="EnrollmentEndID_@Model.EnrollmentID" type="date" asp-for="EndDate" class="form-control" />
+                        <a id="EnrollmentEndButtonID_@Model.EnrollmentID" onclick="SetEnrollmentEndDateNow(@Model.EnrollmentID);" class="d-none btn btn-primary">Stop Enrollment</a>
+                        <div id="EnrollmentEndErrorID_@Model.EnrollmentID" class="d-none text-danger"></div>
+                    }
+                    else
+                    {
+                        <input id="EnrollmentEndID_@Model.EnrollmentID" type="date" asp-for="EndDate" class="d-none form-control" />
+                        <a id="EnrollmentEndButtonID_@Model.EnrollmentID" onclick="SetEnrollmentEndDateNow(@Model.EnrollmentID);" class="btn btn-primary">Stop Enrollment</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="form-group my-1">
+                <a asp-action="Discipline" asp-controller="Enrollment" asp-route-id="@Model.DisciplineID"
+                   class="btn btn-secondary">All Students</a>
+                <input style="float: right;" type="submit" value="Save" class="btn btn-primary" />
+                @if (Model.EndDate != null && Model.EndDate < DateTime.Now)
+                {
+                    <div style="float: right; margin-right: 10px">
+                        <a class="btn btn-secondary" asp-action="RestartStudentEnrollment" asp-controller="Enrollment" asp-route-id="@Model.EnrollmentID">Restart Enrollment</a>
+                    </div>
+                }
+                <div style="float: right; margin-right: 10px">
+                    <a class="btn btn-secondary" asp-action="Student" asp-controller="Enrollment" asp-route-id="@Model.StudentID">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

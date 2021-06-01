@@ -1,0 +1,129 @@
+@model PaginatedList<AttendanceRecord>
+
+@{ ViewData["Title"] = "Attendance Records Dashboard";
+    Layout = "_Layout"; }
+<div class="" id="main">
+    <partial name="_AdminAttendanceNav" />
+    <br />
+
+    <div class="row mb-2">
+        <div class="col-6">
+                @if (ViewBag.ClassesAndStudentsExist)
+                {
+            <button id="modalShowButtonAdd" class="btn btn-sm btn-primary mb-2" type="button" data-toggle="modal" data-target="#staticBackdrop">
+                Create Record
+            </button>}
+            </div>
+        <div class="col-6">
+            <div class="container">
+                <form class="form-inline float-right" asp-action="Index">
+                    <input class="form-control" name="searchString" asp-for="@ViewData["CurrentSearch"]" placeholder="Search" />
+                    <div class="ml-2 btn-group">
+                        <button class="mr-2 btn btn-sm btn-primary" type="submit">Search</button>
+                        <a asp-action="Index" class="mr-2 btn btn-sm btn-secondary">Clear</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Use id=main for all content to be pushed by the side nav. -->
+    <table class="table table-light table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th><a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["StartSortParm"]">Start</a></th>
+                <th><a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["EndSortParm"]">End</a></th>
+                <th><a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["StudentLastNameSortParm"]">Student</a></th>
+                <th><a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["ClassNameSortParm"]">Class Name</a></th>
+                <th><a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["DisciplineSortParm"]">Associated Discipline</a></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+<tr>
+    <td>@x.Start</td>
+    <td>@x.End</td>
+    <td>@x.Student.LastName, @x.Student.FirstName</td>
+    <td>@x.ScheduledClass.Name</td>
+    <td>@x.ScheduledClass.Discipline.Name</td>
+    <td>
+        <a class="btn btn-outline-secondary" asp-action="Edit" asp-route-id="@x.AttendanceRecordID">Edit</a>
+    </td>
+    <td>
+        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@x.AttendanceRecordID">Delete</a>
+    </td>
+</tr>
+}
+        </tbody>
+    </table>
+</div>
+
+<div id="addDiv">
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        @{ await Html.RenderPartialAsync("~/Views/AttendanceRecord/_Add.cshtml", new AttendanceRecord()); }
+    </div>
+</div>
+
+<div class="text-center">
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+       class="btn btn-secondary mr-2 @prevDisabled">
+        Previous
+    </a>
+
+    Page @Model.PageIndex of @Model.TotalPages
+
+
+    <a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+       class="btn btn-secondary mr-2 @nextDisabled">
+        Next
+    </a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $("#staticBackdrop").on("submit", "#addAttendanceRecordForm", function (e) {
+            e.preventDefault();
+
+            let endValue = new Date($("#End").val());
+            let startValue = new Date($("#Start").val());
+            let nowValue = new Date();
+            let validationPassed = true;
+
+            if (startValue > nowValue) {
+                // Start is in the future.
+                validationPassed = false;
+                $("#startValidation").html("Start date/time cannot be in the future");
+            }
+
+            if (startValue >= endValue) {
+                // Start is after end.
+                validationPassed = false;
+                $("#endValidation").html("End date/time must be after Start date/time");
+            }
+
+            if (validationPassed) {            
+                var form = $(this);
+                $.ajax({
+                    url: form.attr("action"),
+                    method: form.attr("method"),  // post
+                    data: form.serialize(),
+                    success: function (partialResult) {
+                        $("#staticBackdrop").html(partialResult);
+                    }
+                });
+            }
+        });
+    </script>
+}

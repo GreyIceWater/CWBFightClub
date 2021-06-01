@@ -1,0 +1,1187 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+body {
+    background-color: #c6c6c6;
+}
+
+.navbar-nav {
+    font-size: 18pt;
+}
+
+.navbar-brand {
+    margin-left: 20px;
+}
+
+/* Provide sufficient contrast against white background */
+.btn-primary {
+    color: #fff !important;
+    background-color: #424242;
+    border-color: black;
+    border-radius: 0;
+}
+
+.btn-primary:hover {
+    color: rgb(200, 200, 200) !important;
+    background-color: black;
+    border-color: gray;
+    cursor: pointer;
+}
+
+.btn-primary:active, .btn-primary:focus {
+    color: white !important;
+    background-color: gray !important;
+    border-color: black !important;
+}
+
+/* The following sidenav properties accessed at - https://www.w3schools.com/howto/howto_js_sidenav.asp */
+/* The side navigation menu */
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: absolute; /* stay full on the side */
+    z-index: 1; /* Stay on top */
+    left: 0;
+    background-color: #111; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+#dashboardButton {
+    left: auto;
+    margin-bottom: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+/* Enrollment styles
+-------------------------------------------------- */
+
+.enrollmentCard {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.enrollmentCard .card-footer {
+    padding: 0 2px 2px 2px;
+    font-size: .8em;
+    font-style: oblique;
+}
+
+.moreInfoWatermark{
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    font-size: 2em;
+    color: rgba(0, 0, 0, .2);
+}
+
+.editEnrollmentButton {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 100;
+    padding: 1px 5px;
+}
+
+.inActiveCornerLabel {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    padding: 1px 5px;
+    opacity: .6;
+}
+
+.btn-outline-danger:hover {
+    color: white !important;
+}
+
+.btn-outline-secondary:hover {
+    color: white !important;
+}
+
+.btn-outline-success:hover {
+    color: white !important;
+}
+
+/* Payment styles
+-------------------------------------------------- */
+.deletePaymentButton {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 100;
+    padding: 1px 5px;
+    background-color: white;
+}
+
+.deletePaymentButton:hover {
+    background-color: red;
+    color: white;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+    font-family: 'Times New Roman';
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Card 1 CSS - Login Screen */
+navlogo img {
+    height: 10px !important;
+    width: 10px;
+}
+
+.card1 {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    background-color: white;
+    position: relative;
+    height: 300px;
+    background-image: url("../Images/CWB_Dojo1.jpg");
+    color: white;
+    font-size: 60px;
+    opacity: .9;
+}
+
+.card1 img {
+    background-size: contain;
+    max-height: 150% !important;
+    max-width: 100% !important;
+}
+
+.card1 p {
+    margin-top: 100px;
+}
+
+.card2 {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #979797;
+}
+
+.card2:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+    padding: 2px 16px;
+}
+
+/* Form Input Color*/
+
+.form-control:focus {
+    border-color: #0d3500;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(25 255 0 / 60%);
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 80px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.studenttable {
+    width: 98%;
+    font-size: 13pt;
+}
+
+.studenttable th {
+    background-color: #3c3c3c;
+    color: white;
+    font-size: 10pt;
+    padding: 0;
+    text-indent: 10px;
+}
+
+.studenttable td {
+    padding: 8px;
+    background-color: #CBD2CF;
+    border: 2px solid #7f9b89;
+}
+
+.studenttable tr td {
+    padding: 10px !important;
+    background-color: #eaeaeaea;
+    border: 1px solid #a3a3a3;
+    line-height: 12px;
+    min-width: 120px;
+}
+
+    .studenttable tr td a {
+        color: #313131;
+    }
+
+.studenttable tbody tr:hover {
+    background-color: black !important;
+}
+
+    /* Delete student css */
+
+    .deletestudent_table dl {
+        margin-left: 18%;
+    }
+
+        .deletestudent_table dl dd {
+            background-color: #e7e7e7 !important;
+            max-width: 500px;
+            color: black;
+        }
+
+    .deletestudent_table h4 {
+        margin-left: 50%;
+        font-size: 25pt;
+    }
+
+    /* Search Bar CSS */
+
+    .topnav {
+        overflow: hidden;
+        background-color: #ededed00;
+        padding: 10px;
+        margin-right: 17px;
+    }
+
+        .topnav a {
+            float: left;
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+            .topnav a.active {
+                background-color: #2196F3;
+                color: white;
+            }
+
+        .topnav .search-container {
+            float: right;
+        }
+
+        .topnav input[type=text] {
+            padding: 6px;
+            margin-top: 8px;
+            font-size: 17px;
+            border: none;
+            margin-right: -8px;
+        }
+
+        .topnav .search-container button {
+            float: right;
+            padding: 6px 10px;
+            margin-top: 8px;
+            margin-right: 16px;
+            background: #ddd;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+
+            .topnav .search-container button:hover {
+                background: #ccc;
+            }
+
+    @media screen and (max-width: 600px) {
+        .topnav .search-container {
+            float: none;
+        }
+
+            .topnav a, .topnav input[type=text], .topnav .search-container button {
+                float: none;
+                display: block;
+                text-align: left;
+                width: 100%;
+                margin: 0;
+                padding: 14px;
+            }
+
+        .topnav input[type=text] {
+            border: 1px solid #ccc;
+        }
+    }
+
+    /* Student Add Button */
+
+    .button {
+        display: inline-flex;
+        height: 40px;
+        width: 150px;
+        border: 2px solid #BFC0C0;
+        margin: 20px 20px 20px 20px;
+        color: #BFC0C0;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: .8em;
+        letter-spacing: 1.5px;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    #DisciplineAdd_Btn {
+        position: absolute;
+        overflow: hidden;
+        cursor: pointer;
+        margin-top: 1.3em;
+        margin-left: -1px;
+        background-color: #424242;
+    }
+
+    #button-5 {
+        position: absolute;
+        overflow: hidden;
+        cursor: pointer;
+        margin-top: 1.3em;
+        margin-left: -1px;
+        background-color: #424242;
+    }
+
+        #button-5 #buttonani {
+            position: relative;
+            transition: all .45s ease-Out;
+            color: white;
+        }
+
+    #translate {
+        transform: rotate(50deg);
+        width: 100%;
+        height: 250%;
+        left: -200px;
+        top: -30px;
+        background: #40ff2c;
+        position: absolute;
+        transition: all .2s ease-Out;
+    }
+
+    #button-5:hover #translate {
+        left: 0;
+    }
+
+    #button-5:hover #buttonani {
+    color: #2D3142;
+    }
+
+    /* Edit Button */
+
+    #editbtn {
+        position: absolute;
+        overflow: hidden;
+        cursor: pointer;
+        margin-top: -3.5em;
+        margin-left: -1px;
+        background-color: #424242;
+    }
+
+        #editbtn #buttonani {
+            position: relative;
+            transition: all .45s ease-Out;
+            color: white;
+        }
+
+        #editbtn:hover #translate {
+            left: 0;
+        }
+
+        #editbtn:hover #buttonani {
+            color: #2D3142;
+        }
+
+    #paymentbtn {
+        position: absolute;
+        overflow: hidden;
+        cursor: pointer;
+        margin-top: -3.5em;
+        margin-left: 150px;
+        background-color: #424242;
+    }
+
+        #paymentbtn #buttonani {
+            position: relative;
+            transition: all .45s ease-Out;
+            color: white;
+        }
+
+        #paymentbtn:hover #translate {
+            left: 0;
+        }
+
+        #paymentbtn:hover #buttonani {
+            color: #2D3142;
+        }
+
+    #discbtn {
+        position: absolute;
+        overflow: hidden;
+        cursor: pointer;
+        margin-top: -3.5em;
+        margin-left: 300px;
+        background-color: #424242;
+    }
+
+        #discbtn #buttonani {
+            position: relative;
+            transition: all .45s ease-Out;
+            color: white;
+        }
+
+        #discbtn:hover #translate {
+            left: 0;
+        }
+
+        #discbtn:hover #buttonani {
+            color: #2D3142;
+        }
+
+    #guardianbtn {
+        position: absolute;
+        overflow: hidden;
+        cursor: pointer;
+        margin-top: -3.5em;
+        margin-left: 750px;
+        background-color: #424242;
+    }
+
+        #guardianbtn #buttonani {
+            position: relative;
+            transition: all .45s ease-Out;
+            color: white;
+        }
+
+        #guardianbtn:hover #translate {
+            left: 0;
+        }
+
+        #guardianbtn:hover #buttonani {
+            color: #2D3142;
+        }
+
+    #historybtn {
+        position: absolute;
+        overflow: hidden;
+        cursor: pointer;
+        margin-top: -3.5em;
+        margin-left: 450px;
+        background-color: #424242;
+    }
+
+        #historybtn #buttonani {
+            position: relative;
+            transition: all .45s ease-Out;
+            color: white;
+        }
+
+        #historybtn:hover #translate {
+            left: 0;
+        }
+
+        #historybtn:hover #buttonani {
+            color: #2D3142;
+        }
+
+    #documentsbtn {
+        position: absolute;
+        overflow: hidden;
+        cursor: pointer;
+        margin-top: -3.5em;
+        margin-left: 600px;
+        background-color: #424242;
+    }
+
+        #documentsbtn #buttonani {
+            position: relative;
+            transition: all .45s ease-Out;
+            color: white;
+        }
+
+        #documentsbtn:hover #translate {
+            left: 0;
+        }
+
+        #documentsbtn:hover #buttonani {
+            color: #2D3142;
+        }
+
+    #editbtn_sel {
+        position: relative;
+        cursor: pointer;
+        margin-top: 1.8em;
+        margin-left: -1px;
+        background-color: #393938;
+        color: white;
+    }
+
+
+    /* End of add button */
+
+    .navstyle1 {
+        color: green;
+        background-color: #24e324;
+        min-width: 98%;
+        position: absolute;
+        height: 4px;
+        margin-top: 55px;
+    }
+
+    .navstyle2 {
+        color: green;
+        background-color: #304b30;
+        min-width: 98%;
+        position: absolute;
+        height: 4px;
+        margin-top: 70px;
+    }
+
+    .navstyle3 {
+        color: green;
+        background-color: #24e324;
+        min-width: 96.5%;
+        position: absolute;
+        height: 4px;
+        margin-top: -110px;
+    }
+
+    .navstyle4 {
+        color: green;
+        background-color: #304b30;
+        min-width: 96.5%;
+        position: absolute;
+        height: 4px;
+        margin-top: -102px;
+    }
+
+    .btnsel_line {
+        color: green;
+        background-color: #00ff00;
+        min-width: 96.5%;
+        position: absolute;
+        height: 4px;
+        margin-top: 26px;
+    }
+
+    .navstyle3 {
+        color: green;
+        background-color: #24e324;
+        width: 100%;
+        position: absolute;
+        height: 4px;
+        margin-top: -110px;
+    }
+
+    .navstyle4 {
+        color: green;
+        background-color: #304b30;
+        width: 100%;
+        position: absolute;
+        height: 4px;
+        margin-top: -102px;
+    }
+
+    /*Student edit menu */
+    #editstudent_tabmenu ul li {
+        padding: 2px !important;
+        margin-top: 45px;
+    }
+
+    /* Student Details */
+
+    #studentdetails_table dl {
+        display: flex;
+        flex-flow: row wrap;
+        font-size: 13pt;
+        font-family: arial;
+    }
+
+    #studentdetails_table dt {
+        flex-basis: 20%;
+    }
+
+    #studentdetails_table dl dd {
+        background-color: #d8d8d8;
+        font-size: 13pt;
+        color: #393939;
+        flex-basis: 70%;
+        flex-grow: 1;
+    }
+
+td > a {
+    line-height: 30px;
+}
+
+/* Calendar */
+
+#calendar {
+    Width: 100%;
+    margin-top: 20px;
+}
+
+#calmenu {
+    margin-top: -40px;
+}
+
+.keypressWeeks {
+    border: 1px solid #a3a3a3;
+}
+
+.joelTable th {
+    background-color: #3c3c3c;
+    font-size: 10pt;
+    padding: 0;
+    text-indent: 10px;
+}
+
+.joelTable td {
+    padding: 8px;
+    background-color: #CBD2CF;
+    border: 2px solid #7f9b89;
+    min-width: 90px;
+}
+
+.joelTable tr td {
+    padding: 10px !important;
+    background-color: #eaeaeaea;
+    border: 1px solid #a3a3a3;
+    line-height: 12px;
+}
+
+    .joelTable tr td a {
+        color: #313131;
+    }
+
+.joelTable tbody tr:hover {
+    background-color: black !important;
+}
+
+
+/* Mobile Media Queries */
+@media only screen and (max-width: 650px) {
+    .navstyle1 {
+        display: none;
+    }
+
+    .navstyle2 {
+        display: none;
+    }
+
+    .card1 {
+        max-width: 90%;
+        margin-left: -15px;
+    }
+
+    .card2 {
+        max-width: 90%;
+        margin-left: -15px;
+    }
+
+    .topnav a, .topnav input[type=text], .topnav .search-container button {
+        display: none;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    #button-5 {
+        margin-top: -30px;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    .priority-5 {
+        display: none;
+    }
+
+    .joelTable-light tbody + tbody, .joelTable-light td, .joelTable-light th, .joelTable-light thead th {
+        width: 30%;
+    }
+
+    #dashboardButton {
+        display: none;
+    }
+
+    .footer {
+        bottom: 0;
+        height: 1em;
+        left: 0;
+        position: absolute;
+        //changed to relative from fixed also works if position is not there font-size: small;
+        width: 100%;
+    }
+
+    .moreInfoWatermark {
+        display: none;
+    }
+
+    .form-inline .form-control {
+        display: none;
+    }
+
+    .joelTable td {
+        min-width: 0px;
+        empty-cells: hide !important;
+    }
+
+    .btn-group > .btn-group:not(:last-child) > .btn, .btn-group > .btn:not(:last-child):not(.dropdown-toggle) {
+        display: none;
+    }
+
+    .btn-group > .btn-group:not(:first-child) > .btn, .btn-group > .btn:not(:first-child) {
+        display: none;
+    }
+}
+
+/* Phone Landscape */
+@media screen and (min-width: 650px) and (max-width: 1200px) and (orientation: landscape) {
+
+    .joelTable td {
+        min-width: 0px;
+    }
+
+    .navstyle1 {
+        display: none;
+    }
+
+    .navstyle2 {
+        display: none;
+    }
+
+    .card1 {
+        max-width: 90%;
+        margin-left: -15px;
+    }
+
+    .card2 {
+        max-width: 90%;
+        margin-left: -15px;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    .priority-5 {
+        display: none;
+    }
+
+    .joelTable-light tbody + tbody, .joelTable-light td, .joelTable-light th, .joelTable-light thead th {
+        width: 30%;
+    }
+
+    #dashboardButton {
+        display: none;
+    }
+
+    .nav-tabs {
+        align-items: flex-start;
+        border-bottom: 0px solid #dee2e6;
+    }
+
+    #documentsbtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    #editbtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    #paymentbtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    #discbtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    #historybtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    #guardianbtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    .nav-tabs #paymentbtn {
+        margin-left: 12%;
+    }
+
+    .nav-tabs #discbtn {
+        margin-left: 24%;
+    }
+
+    .nav-tabs #historybtn {
+        margin-left: 36%;
+    }
+
+    .nav-tabs #documentsbtn {
+        margin-left: 48%;
+    }
+
+    .nav-tabs #guardianbtn {
+        margin-left: 60%;
+    }
+
+    .col-md-10 {
+        margin-left: auto;
+    }
+
+    .footer {
+        bottom: 0;
+        height: 1em;
+        left: 0;
+        position: absolute;
+        //changed to relative from fixed also works if position is not there font-size: small;
+        width: 100%;
+    }
+
+    .moreInfoWatermark {
+        display: none;
+    }
+
+    .form-inline .form-control {
+        display: inline-flex;
+        width: 70px;
+    }
+}
+
+/* iPad Media Queries */
+@media screen and (min-width: 901px) and (max-width: 1100px) and (orientation: landscape) {
+    .navstyle1 {
+        margin-left: -.68%;
+    }
+
+    .navstyle2 {
+        margin-left: -.68%;
+    }
+
+    .bg-white {
+        display: inline-flex;
+        min-width: -webkit-fill-available;
+    }
+
+    .footer {
+        bottom: 0;
+        height: 1em;
+        left: 0;
+        position: absolute;
+        //changed to relative from fixed also works if position is not there font-size: small;
+        width: 100%;
+    }
+
+    .container {
+        max-width: 720px;
+    }
+
+    .joelTable tr td {
+        min-width: 100px;
+    }
+}
+
+
+@media screen and (min-width: 660px) and (max-width: 1100px) and (orientation: portrait) {
+
+    .joelTable th {
+        background-color: #3c3c3c;
+        color: white;
+        font-size: 10pt;
+        padding: 0;
+        text-indent: 10px;
+    }
+
+    .joelTable td {
+        padding: 8px;
+        background-color: #CBD2CF;
+        border: 2px solid #7f9b89;
+        min-width: 90px;
+    }
+
+    .joelTable tr td {
+        padding: 10px !important;
+        background-color: #eaeaeaea;
+        border: 1px solid #a3a3a3;
+        line-height: 12px;
+    }
+
+        .joelTable tr td a {
+            color: #313131;
+        }
+
+    .joelTable tbody tr:hover {
+        background-color: black !important;
+    }
+
+    .form-inline .form-control {
+        display: inline-flex;
+        width: fit-content;
+    }
+
+    .navstyle1 {
+        display: none;
+    }
+
+    .navstyle2 {
+        display: none;
+    }
+
+    .card1 {
+        max-width: 90%;
+        margin-left: -15px;
+    }
+
+    .card2 {
+        max-width: 90%;
+        margin-left: -15px;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    .priority-5 {
+        display: none;
+    }
+
+        .joelTable-light tbody + tbody, .joelTable-light td, .joelTable-light th, .joelTable-light thead th {
+            width: 30%;
+        }
+
+    #dashboardButton {
+        display: none;
+    }
+
+    .nav-tabs {
+        align-items: flex-start;
+        border-bottom: 0px solid #dee2e6;
+    }
+
+    #documentsbtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    #editbtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    #paymentbtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    #discbtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    #historybtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    #guardianbtn {
+        width: 80px;
+        font-size: xx-small;
+    }
+
+    .nav-tabs #paymentbtn {
+        margin-left: 12%;
+    }
+
+    .nav-tabs #discbtn {
+        margin-left: 24%;
+    }
+
+    .nav-tabs #historybtn {
+        margin-left: 36%;
+    }
+
+    .nav-tabs #documentsbtn {
+        margin-left: 48%;
+    }
+
+    .nav-tabs #guardianbtn {
+        margin-left: 60%;
+    }
+
+    .col-md-10 {
+        margin-left: auto;
+    }
+
+    .footer {
+        bottom: 0;
+        height: 1em;
+        left: 0;
+        position: absolute;
+        //changed to relative from fixed also works if position is not there font-size: small;
+        width: 100%;
+    }
+
+    .container {
+        max-width: 720px;
+    }
+
+    .form-inline .form-control {
+        display: inline-flex;
+        width: 80px;
+    }
+}
+
+/* Attachment Table */
+.attachmenttable tr td {
+    padding: 15px;
+}
+
+.attachmenttable tbody {
+    display: inline-block; /* whatever, just  reset table layout display to go further */
+}
+
+.attachmenttable tr {
+    display: flex;
+    flex-wrap: wrap; /* allow to wrap on multiple rows */
+ }
+
+.attachmenttable td {
+    display: block;
+    flex: initial; /* to evenly distributs flex elements */
+    align-items: flex-start;
+    padding: 10px;
+}
+
+#Avatar.form-control.rounded-0 {
+    background-color: #a000;
+    border: 0;
+}
+
+.dashboardCard {
+    min-height: 150px;
+    margin-bottom: 20px;
+}
+
+
+a {
+    color: #f3f3f3;
+}
+
+.navActive {
+    font-weight: bolder;
+}
+
+/* Diable edge eyeball */
+input[type=password]::-ms-reveal, input[type=password]::-ms-clear {
+    display: none;
+}
+
+/* Resolve inconsistencies in appearance */
+select, input {
+    border-radius: 0 !important;
+}
+
+.password {
+    width: 100%;
+    padding-right: 52px;
+}
+
+.eyeBallContainer {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    bottom: 1px;
+    z-index: 99;
+    opacity: .7;
+}

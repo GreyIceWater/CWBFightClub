@@ -1,0 +1,144 @@
+﻿@model StudentProgressReport
+@{
+    ViewData["Title"] = "Student Progress By Hours Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int recordCount = Model.TableLabels?.Count ?? 0;
+}
+
+<partial name="_ReportNav" />
+<h2 class="text-center">Student Progress by Discipline - Class Hours</h2>
+<h5 class="text-center">Student Class Attendance Hours Since Last Rank</h5>
+
+<form class="" method="post" asp-action="StudentProgress">
+    <fieldset style="background-color: #eeeeee; padding: 5px;">
+        <h5 style="color: black; padding: 3px 5px; width:min-content">Prompts:</h5>
+        <hr />
+        <div class="row">
+            <label class="col-sm-3 col-form-label">Discipline:</label>
+            <div class="col-sm-9">
+                <select style="max-width: 200px;" class="form-control" asp-for="DisciplineID"
+                        asp-items="@ViewBag.Disciplines">
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-3 col-form-label">Min. Hours to Show:</label>
+            <div class="col-sm-9">
+                <input class="form-control" type="number" value="@Model.StudentHoursPastCurrentRank" min="0" max="200" style="max-width: 200px;"
+                       asp-for="StudentHoursPastCurrentRank" />
+            </div>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Generate Report" />
+    </fieldset>
+</form>
+<br />
+@if (recordCount > 0)
+{
+    <button onclick="$('#myChart').slideToggle('fast'); $(this).html($(this).html() == 'Hide Chart' ? 'Show Chart' : 'Hide Chart')" class="btn btn-outline-dark">Hide Chart</button>
+    <h2 class="text-center">Discipline: @Model.Discipline</h2>
+    <div style="background-color: white;" class="container-fluid">
+        <canvas style="width: auto; max-height: 400px;" class="container-sm mt-5" id="myChart"></canvas>
+    </div>
+    <br />
+
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Student</th>
+                <th>Date of Last Rank</th>
+                <th class="text-center">Attendance Hours Since Last Rank</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < recordCount; i++)
+            {
+                <tr style="cursor: pointer" onclick="gotoEditStudent(@Model.StudentIDs[i]);">
+                    <td>@Model.TableLabels[i].Trim('\'')</td>
+                    <td>@Model.DateOfLastRanks[i]</td>
+                    <td class="text-center">@Model.TableDatas[i]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (ViewBag.FromPost != null)
+{
+<div class="badge-danger text-center">No records to display in current report</div>
+}
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [@Html.Raw(Model.GraphLabels)],
+                    datasets: [{
+                        data: [@Html.Raw(Model.GraphDatas)],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)',
+                            'rgba(128, 128 ,128, 0.7)',
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)',
+                            'rgba(128, 128 ,128, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(128, 128 ,128, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(128, 128 ,128, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function gotoEditStudent(studentID) {
+            window.location.href = "/Enrollment/Student?id=" + studentID;
+        }
+    </script>
+}

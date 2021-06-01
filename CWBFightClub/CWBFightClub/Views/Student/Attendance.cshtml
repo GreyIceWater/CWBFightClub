@@ -1,0 +1,162 @@
+@model IEnumerable<AttendanceRecord>
+
+@{ ViewData["Title"] = "Attendance Records Dashboard";
+    Layout = "_Layout"; }
+
+<!-- Edit Menu Buttons -->
+<div class="row">
+    <div class="col-md-10">
+
+    </div>
+
+    <div class="container" id="editstudent_tabmenu">
+        <ul class="nav nav-tabs">
+
+            <li>
+                <a asp-action="Edit" asp-controller="Student" asp-route-id="@ViewBag.studentid">
+                    <div class="button" id="editbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Details</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Student" asp-controller="Payment" asp-route-id="@ViewBag.studentid">
+                    <div class="button" id="paymentbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Payments</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Student" asp-controller="Enrollment" asp-route-id="@ViewBag.studentid">
+                    <div class="button" id="discbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Disciplines</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <div class="button" id="historybtn">
+                    Attendance
+                    <div class="btnsel_line"></div>
+                </div>
+            </li>
+
+            <li>
+                <a asp-action="Index" asp-controller="Attachments" asp-route-studentid="@ViewBag.studentid">
+                    <div class="button" id="documentsbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Attachments</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Student" asp-controller="Guardian" asp-route-studentid="@ViewBag.studentid">
+                    <div class="button" id="guardianbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Guardians</div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <br>
+    </div>
+</div>
+    <div class="text-center">
+        <h2 class="mb-5">Attendance Records for @ViewBag.studentname</h2>
+    </div>
+
+    <!-- Use id=main for all content to be pushed by the side nav. -->
+    <table class="studenttable">
+        <thead>
+            <tr>
+                <th><a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["StartSortParm"]">Start</a></th>
+                <th><a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["EndSortParm"]">End</a></th>
+                <th><a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["ClassNameSortParm"]">Class Name</a></th>
+                <th><a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["DisciplineSortParm"]">Associated Discipline</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.Start</td>
+                    <td>@x.End</td>
+                    <td>@x.ScheduledClass.Name</td>
+                    <td>@x.ScheduledClass.Discipline.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div id="addDiv">
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            @{ await Html.RenderPartialAsync("~/Views/AttendanceRecord/_Add.cshtml", new AttendanceRecord()); }
+        </div>
+    </div>
+
+    @*<div class="text-center">
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
+
+            <a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+               class="btn btn-secondary mr-2 @prevDisabled">
+                Previous
+            </a>
+
+            Page @Model.PageIndex of @Model.TotalPages
+
+
+            <a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+               class="btn btn-secondary mr-2 @nextDisabled">
+                Next
+            </a>
+        </div>*@
+
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script>
+            $("#staticBackdrop").on("submit", "#addAttendanceRecordForm", function (e) {
+                e.preventDefault();
+
+                let endValue = new Date($("#End").val());
+                let startValue = new Date($("#Start").val());
+                let nowValue = new Date();
+                let validationPassed = true;
+
+                if (startValue > nowValue) {
+                    // Start is in the future.
+                    validationPassed = false;
+                    $("#startValidation").html("Start date/time cannot be in the future");
+                }
+
+                if (startValue >= endValue) {
+                    // Start is after end.
+                    validationPassed = false;
+                    $("#endValidation").html("End date/time must be after Start date/time");
+                }
+
+                if (validationPassed) {
+                    var form = $(this);
+                    $.ajax({
+                        url: form.attr("action"),
+                        method: form.attr("method"),  // post
+                        data: form.serialize(),
+                        success: function (partialResult) {
+                            $("#staticBackdrop").html(partialResult);
+                        }
+                    });
+                }
+            });
+        </script>
+    }

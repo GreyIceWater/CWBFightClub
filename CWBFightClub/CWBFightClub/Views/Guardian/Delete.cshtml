@@ -1,0 +1,67 @@
+﻿@model Guardian
+
+@{
+    ViewData["Title"] = "Delete Guardian";
+}
+
+<br />
+<h2>Delete Guardian</h2>
+
+<h4>Really delete this Guardian?</h4>
+<div class="deletestudent_table">
+
+    <br />
+    <h4>Guardian</h4>
+    <hr />
+
+    <center>
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+        </dl>
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+        </dl>
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+        </dl>
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+        </dl>
+
+    </center>
+
+    <br />
+    <form asp-action="DeletePost">
+        <input type="hidden" name="id" value="@Model.GuardianID" />
+        <input type="hidden" name="studentid" value="@ViewBag.studentid" />
+        <a asp-action="Unlink" asp-route-studentid="@ViewBag.studentid" asp-route-studentguardianid="@ViewBag.studentguardianid"
+           value="Delete" class="btn btn-danger float-right">Delete</a>
+        <a class="btn btn-secondary float-right mr-2" asp-action="Edit" asp-route-id="@Model.GuardianID" asp-route-studentid="@ViewBag.studentid">Back to List</a>
+    </form>
+
+</div>

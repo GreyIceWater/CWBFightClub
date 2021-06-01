@@ -1,0 +1,66 @@
+﻿@model Payment
+
+
+<form id="addPaymentForm" method="post" class="form" asp-action="Add" asp-controller="Payment">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add a payment record.</h5>
+                <a class="close" asp-action="Student" asp-route-id="@ViewBag.StudentID" asp-controller="Payment">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+
+                <input hidden name="studentID" asp-for="StudentID" value="@ViewBag.StudentID" />
+
+                <div class="card enrollmentCard" style="border: 2px solid black;">
+                    <div class="card-header">
+                        <h2>Add A Payment</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label asp-for="ReceivedDate"></label>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="control-label" asp-for="Amount"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="date" asp-for="ReceivedDate" class="form-control" value='@DateTime.Now.ToString("yyyy-MM-dd")' />
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            <input type="number" min=".01" step=".01" class="form-control" asp-for="Amount" />
+                                        </div>
+                                        <span asp-validation-for="Amount" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label asp-for="Note" class="control-label"></label>
+                                    <textarea rows="3" asp-for="Note" class="form-control"></textarea>
+                                    <span asp-validation-for="Note" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button id="addPaymentButton" type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</form>

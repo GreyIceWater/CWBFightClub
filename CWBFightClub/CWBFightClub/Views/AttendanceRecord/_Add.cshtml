@@ -1,0 +1,71 @@
+﻿@model AttendanceRecord
+
+
+<form id="addAttendanceRecordForm" method="post" class="form" asp-action="Create" asp-controller="AttendanceRecord">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: 0px !important;">
+                <h5 class="modal-title" id="staticBackdropLabel">Add an Attendance Record</h5>
+                <a class="close" asp-action="Index" asp-controller="AttendanceRecord">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <div class="card enrollmentCard" style="border: 2px solid black;">
+                    @*<div class="card-header">
+                        <h2>Add A Payment</h2>
+                    </div>*@
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="control-label" asp-for="StudentID">Student</label>
+                            </div>
+                            <div class="col-6">
+                                <label class="control-label" asp-for="ScheduledClassID">Class</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-control" asp-for="StudentID"
+                                        asp-items="@ViewBag.Students">
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-control" asp-for="ScheduledClassID"
+                                        asp-items="@ViewBag.ScheduledClasses">
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="control-label" asp-for="Start"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="datetime-local" asp-for="Start" class="form-control" value='' /> <!-- If defaulting is necessary: DateTime.Now.ToString("yyyy-MM-ddThh:mm:ss") -->
+                                <span id="startValidation" asp-validation-for="Start" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="control-label" asp-for="End"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="datetime-local" asp-for="End" class="form-control" value='' />
+                                <span id="endValidation" asp-validation-for="End" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top: 0px !important;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button id="addPaymentButton" type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</form>

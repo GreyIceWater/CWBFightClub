@@ -1,0 +1,73 @@
+﻿@model Belt
+
+@{
+    ViewData["Title"] = "Delete Belt";
+}
+
+<br />
+<h2>Delete Belt</h2>
+
+<h4>Really delete this belt?</h4>
+<div class="deletestudent_table">
+
+    <br />
+    <h4>Belt</h4>
+    <hr />
+
+    <center>
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                Discipline
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.DisciplineName
+            </dd>
+        </dl>
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+        </dl>
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.BeltDescription)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.BeltDescription)
+            </dd>
+
+        </dl>
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Rank)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Rank)
+            </dd>
+        </dl>
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.RankDescription)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.RankDescription)
+            </dd>
+        </dl>
+
+    </center>
+
+    <br />
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="BeltID" />
+        <input type="submit" value="Delete" class="btn btn-danger float-right" />
+        <a class="btn btn-secondary float-right mr-2" asp-action="Edit" asp-route-id="@Model.BeltID" >Back to List</a>
+    </form>
+</div>

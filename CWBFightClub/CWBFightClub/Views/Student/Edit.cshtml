@@ -1,0 +1,177 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = "Edit Student";
+
+}
+
+<div class="row">
+    <div class="col-md-10">
+
+    </div>
+
+    <!-- Edit Menu Buttons -->
+
+    <div class="container" id="editstudent_tabmenu">
+        <ul class="nav nav-tabs">
+
+            <li>
+                <div class="button" id="editbtn">
+                    Details
+                    <div class="btnsel_line"></div>
+                </div>
+            </li>
+
+            <li>
+                <a asp-action="Student" asp-controller="Payment" asp-route-id="@Model.StudentID">
+                    <div class="button" id="paymentbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Payments</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Student" asp-controller="Enrollment" asp-route-id="@Model.StudentID">
+                    <div class="button" id="discbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Disciplines</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Attendance" asp-controller="Student" asp-route-studentId="@Model.StudentID">
+                    <div class="button" id="historybtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Attendance</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Index" asp-controller="Attachments" asp-route-studentid="@Model.StudentID">
+                    <div class="button" id="documentsbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Attachments</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Student" asp-controller="Guardian" asp-route-studentid="@Model.StudentID">
+                    <div class="button" id="guardianbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Guardians</div>
+                    </div>
+                </a>
+            </li>
+
+        </ul>
+        <br>
+    </div>
+</div>
+
+<div class="text-center">
+    <h2 class="">Details for @Model.FirstName @Model.LastName</h2>
+</div>
+
+<form asp-action="Edit">
+    <div class="row">
+        <div class="col-md-5">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StudentID" value="@Model.StudentID" />
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MiddleName" class="control-label"></label>
+                <input asp-for="MiddleName" class="form-control" />
+                <span asp-validation-for="MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DOB" class="control-label"></label>
+                <input id="dob" asp-for="DOB" class="form-control" />
+                <span asp-validation-for="DOB" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StreetAddress" class="control-label"></label>
+                <input asp-for="StreetAddress" class="form-control" />
+                <span asp-validation-for="StreetAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ZIP" class="control-label"></label>
+                <input asp-for="ZIP" class="form-control" />
+                <span asp-validation-for="ZIP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="CreatedDate" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="ModifiedDate" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="CreatedBy" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="ModifiedBy" class="form-control" hidden />
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="WaiverSigned" /> @Html.DisplayNameFor(model => model.WaiverSigned)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsInstructor" /> @Html.DisplayNameFor(model => model.IsInstructor)
+                </label>
+            </div>
+            <br />
+            <div class="form-group" style="margin-top: 20px">
+                <input style="float:right" type="submit" value="Save" class="btn btn-primary" />
+                <div style="float:right; margin-right: 10px">
+                    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+                </div>
+                <div style="float:right; margin-right: 10px">
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.StudentID">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/alterDateValidationForDOB.js"></script>
+}

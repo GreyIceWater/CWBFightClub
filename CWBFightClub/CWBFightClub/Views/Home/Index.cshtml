@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{ViewData["Title"] = "Login";}
+<br /><br />
+
+<div class="loginPage_html">
+
+<div class="col-md-10 offset-1">
+
+    <!-- Card 1, Logo, Login text -->
+    <center>
+        <div class="card1">
+            <br />
+            <p>LOGIN</p>
+            <br />
+            <div class="navstyle3"> &nbsp;  </div>
+            <div class="navstyle4"> &nbsp;  </div>
+        </div>
+    </center>
+
+    <!-- Card 2, Login Form -->
+    <br />
+    <div class="card2">
+        <form id="account" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                    <input class="form-control" placeholder="Instructor ID" />
+                </div>
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+                    <input class="form-control" placeholder="Password" />
+                </div>
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Log in</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>

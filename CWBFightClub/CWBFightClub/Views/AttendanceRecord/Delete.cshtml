@@ -1,0 +1,42 @@
+﻿@model AttendanceRecord
+
+@{ ViewData["Title"] = "Attendance Records Delete";
+    Layout = "_Layout"; }
+<div class="" id="main">
+    <partial name="_AdminAttendanceNav" />
+    <br />
+    <div class="row">
+        <div class="mx-auto col-md-5">
+            <form asp-action="Delete">
+                <input hidden asp-for="AttendanceRecordID" value="@Model.AttendanceRecordID" />
+                <div class="form-group">
+                    <label asp-for="StudentID" class="control-label">Student</label>
+                    <input class="form-control" readonly value="@Model.Student.FirstName @Model.Student.LastName" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="ScheduledClassID" class="control-label">Class</label>
+                    <input class="form-control" readonly value="@Model.ScheduledClass.Name" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Start" class="control-label"></label>
+                    <input readonly type="datetime-local" asp-for="Start" class="form-control" value='@Model.Start.ToString("yyyy-MM-ddThh:mm:ss")' />
+                </div>
+                <div class="form-group">
+                    <label asp-for="End" class="control-label"></label>
+                    <input readonly type="datetime-local" asp-for="End" class="form-control" value='@Model.End.ToString("yyyy-MM-ddThh:mm:ss")' />
+                </div>
+                <br />
+                <h3>Are you sure you want to delete this record?</h3>
+                <div class="form-group" style="margin-top: 20px">
+                    <input style="float:right" type="submit" value="Delete" class="btn btn-danger" />
+                    <div style="float:right; margin-right: 10px">
+                        <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

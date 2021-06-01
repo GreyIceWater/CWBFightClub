@@ -1,0 +1,62 @@
+﻿@model IEnumerable<DatabaseAdministration>
+@{
+    ViewData["Title"] = "Database Administration";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row">
+        <h1>Database Administration</h1>
+    </div>    
+    <div class="row">
+        <form asp-action="Backup">
+            <input type="submit" value="Create Backup" class="btn btn-primary mb-3 mt-4" />
+        </form>
+    </div>
+    <div class="row">
+        @if (Model.Any())
+        {
+            <table class="studenttable">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FileName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FileDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FileLocation)
+                        </th>
+                        <th></th>
+                        <!-- Add empty header for restore button -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var file in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelitem => file.FileName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelitem => file.FileDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelitem => file.FileLocation)
+                            </td>
+                            <td>
+                                <a class="btn btn-danger text-white" asp-action="Delete" asp-route-filename="@file.FileName">Delete</a>
+                            </td>
+                            <!-- Add button to restore -->
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h2 class="hideOnClick text-danger">No database backups created. Click 'Create Backup' button to create one.</h2>
+        }
+    </div>
+</div>

@@ -1,0 +1,143 @@
+﻿@model PaginatedList<Student>
+
+@{
+    ViewData["Title"] = "Student Index";
+}
+
+<div class="ml-auto">
+
+    <h4 class="mb-4">Students</h4>
+
+
+    @*<div class="button" id="button-5">
+        <div id="translate"></div>
+        <a asp-action="create">Add + </a>
+    </div>*@
+<div class="row mb-2">
+    <div class="col-6">
+        <a asp-action="create" class="btn btn-primary">Add + </a>
+    </div>
+    <div class="col-6">
+        <div class="container">
+            <form class="form-inline float-right" asp-action="Index">
+                <input class="form-control" name="searchString" asp-for="@ViewData["CurrentSearch"]" placeholder="Search" />
+                <div class="ml-2 btn-group">
+                    <button class="mr-2 btn btn-sm btn-primary" type="submit">Search</button>
+                    <a asp-action="Index" class="mr-2 btn btn-sm btn-secondary">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    
+    
+
+    @*<div class="topnav">
+        <div class="search-container">
+            <form asp-action="Index">
+                <input class="form-control" name="searchString" asp-for="@ViewData["CurrentSearch"]" placeholder="Search" />
+                <div class="ml-2 btn-group">
+                    <button class="btn btn-sm btn-primary" type="submit">Search</button>
+                    <a asp-action="Index" class="btn btn-sm btn-secondary">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+    @if (!Model.Any())
+    {
+        <h2 class="text-center">No Students Found</h2>
+    }
+    else
+    {
+        <table class="joelTable joelTable-light table table-light table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        <a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParm"]">
+                            First Name
+                        </a>
+                    </th>
+                    <th>
+                        <a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]">
+                            Last Name
+                        </a>
+                    </th>
+                    <th>
+                        <a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["DOBSortParm"]">
+                            DOB
+                        </a>
+                    </th>
+                    <th>
+                        <a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["PhoneSortParm"]">
+                            Phone
+                        </a>
+                    </th>
+                    <th>
+                        <a class="text-white" asp-action="Index" asp-route-sortOrder="@ViewData["EmailSortParm"]">
+                            Email
+                        </a>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.StudentID">
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.StudentID">
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.StudentID">
+                                @Html.DisplayFor(modelItem => item.DOB)
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.StudentID">
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.StudentID">
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </a>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<div class="text-center mt-3">
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+       class="btn btn-secondary mr-2 @prevDisabled">
+        Previous
+    </a>
+
+    Page @Model.PageIndex of @Model.TotalPages
+
+
+    <a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+       class="btn btn-secondary ml-2 @nextDisabled">
+        Next
+    </a>
+</div>
+
+

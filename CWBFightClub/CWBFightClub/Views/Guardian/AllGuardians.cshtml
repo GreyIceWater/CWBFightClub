@@ -1,0 +1,129 @@
+﻿@model PaginatedList<Guardian>
+
+@{
+    ViewData["Title"] = "Existing Guardians";
+    int fromWorkflow = ViewBag.FromStudentWorkflow == true ? 1 : 0;
+}
+<h2>Add Existing Guardian To @ViewBag.studentname</h2>
+<div class="row mb-3">    
+    <div class="col-12">
+        <div class="container mt-5">
+            <form class="form-inline float-right" method="get" asp-action="AllGuardians" >
+                <input hidden name="studentid" value="@ViewBag.studentid" />
+                <input hidden name="fromWorkflow" value='@fromWorkflow' />
+                <input class="form-control" name="searchString" asp-for="@ViewData["CurrentSearch"]" placeholder="Search Names" />
+                <div class="ml-2 btn-group">
+                    <button class="mr-2 btn btn-sm btn-primary" type="submit">Search</button>
+                    <a asp-action="AllGuardians" asp-route-fromStudentWorkflow='@ViewBag.FromStudentWorkflow' 
+                       asp-route-studentid="@ViewBag.studentid" class="mr-2 btn btn-sm btn-secondary">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ml-auto">
+            @if (Model.Any())
+            {
+                <table class="joelTable joelTable-light table table-light table-hover">
+                    <thead>
+                        <tr>
+                            <th><a class="text-white" asp-controller="Guardian" asp-action="AllGuardians" 
+                                   asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["FirstNameSortParm"]">First Name</a></th>
+                            <th><a  asp-controller="Guardian" asp-action="AllGuardians" 
+                                   asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["LastNameSortParm"]">Last Name</a></th>
+                            <th><a  asp-controller="Guardian" asp-action="AllGuardians" 
+                                   asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["StreetSortParm"]">Street</a></th>
+                            <th><a  asp-controller="Guardian" asp-action="AllGuardians" 
+                                   asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["PhoneSortParm"]">Phone Number</a></th>
+                            <th><a  asp-controller="Guardian" asp-action="AllGuardians"
+                                   asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["EmailSortParm"]">Email</a></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                <p>
+                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    @Html.DisplayFor(modelItem => item.LastName)
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    @Html.DisplayFor(modelItem => item.StreetAddress)
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    @Html.DisplayFor(modelItem => item.Phone)
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </p>
+                            </td>
+                            <td style="text-align:center">
+                                <a class="btn-sm btn-success text-white" asp-controller="Guardian" asp-action="link"
+                                   asp-route-guardianid="@item.GuardianID" asp-route-fromStudentWorkflow="@ViewBag.FromStudentWorkflow" 
+                                   asp-route-studentid="@ViewBag.studentid">
+                                    Add
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h5 class="text-danger text-center mt-4">No existing guardians found.</h5>
+            }
+
+        </div>
+    </div>    
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="container d-flex justify-content-sm-end">
+            @if (ViewBag.FromStudentWorkflow != null && ViewBag.FromStudentWorkflow == true)
+            {
+                <a class="btn btn-secondary mt-3 mr-2" asp-controller="guardian" asp-action="Student" 
+                   asp-route-fromStudentWorkflow="true" asp-route-studentid="@ViewBag.studentid">Back to List</a>
+            }
+            else
+            {
+                <a class="btn btn-secondary mt-3 mr-2" asp-controller="guardian" asp-action="Student" asp-route-studentid="@ViewBag.studentid">Back to List</a>
+            }
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="AllGuardians" asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+       class="btn btn-secondary mr-2 @prevDisabled">
+        Previous
+    </a>
+
+    Page @Model.PageIndex of @Model.TotalPages
+
+
+    <a asp-action="AllGuardians" asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+       class="btn btn-secondary ml-2 @nextDisabled">
+        Next
+    </a>
+</div>

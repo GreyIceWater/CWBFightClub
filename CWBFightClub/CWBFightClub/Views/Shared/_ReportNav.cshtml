@@ -1,0 +1,29 @@
+﻿@{
+    string navAction = ViewContext.RouteData.Values["Action"].ToString();
+ }
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a style="        border-top: 2px solid #999999;
+        border-bottom: 2px solid #999999;" class="navbar-brand" asp-action="Reports" asp-controller="Dashboard">Report Categories</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link @(navAction == "Attendance" ? "active" : string.Empty)" asp-action="Attendance" asp-controller="Dashboard">Attendance</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(navAction == "StudentProgressClasses" ? "active" : string.Empty)" asp-action="StudentProgressClasses" asp-controller="Dashboard">Progress</a>
+            </li>
+            @*<li class="nav-item">
+                <a class="nav-link @(navAction == "StudentProgress" ? "active" : string.Empty)" asp-action="StudentProgress" asp-controller="Dashboard">Progress By Hour</a>
+            </li>*@
+            <li class="nav-item">
+                <a class="nav-link @(navAction == "Payment" ? "active" : string.Empty)" asp-action="Payment" asp-controller="Dashboard">Payments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(navAction == "Balance" ? "active" : string.Empty)" asp-action="Balance" asp-controller="Dashboard">Balance</a>
+            </li>
+        </ul>
+    </div>
+</nav>

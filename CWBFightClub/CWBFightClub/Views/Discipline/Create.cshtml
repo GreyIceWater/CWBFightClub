@@ -1,0 +1,50 @@
+﻿@model Discipline
+
+@{
+    ViewData["Title"] = "Discipline Entry";
+}
+<div class="row">
+    <div class="col-md-10">
+        <h4>Discipline Entry</h4>
+        <hr />
+    </div>
+</div>
+
+<form asp-action="Create" id="validForm">
+    <div class="row">
+        <div class="col-md-5">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="6"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DefaultCostPerMonth" class="control-label"></label>
+                <input asp-for="DefaultCostPerMonth" class="form-control" />
+                <span asp-validation-for="DefaultCostPerMonth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CalendarColor" class="control-label"></label>
+                <input type="color" asp-for="CalendarColor" class="form-control" />
+                <span asp-validation-for="CalendarColor" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-top: 100px">
+                <input style="float:right" type="submit" value="Create" class="btn btn-primary" />
+                <div style="float:right; margin-right: 10px">
+                    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>formValIndicator();</script>
+}

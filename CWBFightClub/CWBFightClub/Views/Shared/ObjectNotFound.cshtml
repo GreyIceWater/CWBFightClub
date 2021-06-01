@@ -1,0 +1,16 @@
+﻿@model ObjectNotFoundViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+<p><strong>@Model.ObjectType was not found.</strong></p>
+@if (!string.IsNullOrWhiteSpace(Model.CustomMessage))
+{ 
+    <p>@Model.CustomMessage</p>
+}
+<input action="action" class="btn btn-secondary"
+       onclick="window.history.go(-1); return false;" type="submit" value="Back" />
+<a class="btn btn-outline-secondary" asp-area="" asp-controller="Home" asp-action="Index">Home</a>

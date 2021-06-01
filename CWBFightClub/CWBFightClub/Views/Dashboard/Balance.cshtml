@@ -1,0 +1,47 @@
+﻿@model StudentBalanceReport
+@{
+    ViewData["Title"] = "Student Current Balance Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int recordCount = Model.Results?.Count ?? 0; 
+}
+
+
+<partial name="_ReportNav" />
+<h2 class="text-center">Student Balance Report</h2>
+<h5 class="text-center">Outstanding Balances</h5>
+
+@if (recordCount > 0)
+{
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Student</th>
+                <th>Student Phone</th>
+                <th>Current Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for (int i = 0; i < recordCount; i++)
+        {
+            <tr style="cursor: pointer" onclick="gotoEditStudent(@Model.Results[i].StudentID);">
+                <td>@Model.Results[i].TableStudent</td>
+                <td>@Model.Results[i].StudentPhone</td>
+                <td>@Model.Results[i].CurrentBalance</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else if (ViewBag.FromPost != null)
+{
+<div class="badge-danger text-center">No records to display in current report</div>
+}
+
+@section Scripts {
+    <script>
+        function gotoEditStudent(studentID) {
+            window.location.href = "/Payment/Student?id=" + studentID;
+        }
+    </script>
+}

@@ -1,0 +1,53 @@
+﻿@model AttendanceRecord
+
+@{ ViewData["Title"] = "Attendance Records Edit";
+    Layout = "_Layout"; }
+<div class="" id="main">
+    <partial name="_AdminAttendanceNav" />
+    <br />
+    <div class="row">
+        <div class="mx-auto col-md-5">
+            <form asp-action="Edit">
+                <input hidden asp-for="AttendanceRecordID" value="@Model.AttendanceRecordID" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="StudentID" class="control-label">Student</label>
+                    <select class="form-control" asp-for="StudentID"
+                            asp-items="@ViewBag.Students">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ScheduledClassID" class="control-label">Class</label>
+                    <select class="form-control" asp-for="ScheduledClassID"
+                            asp-items="@ViewBag.ScheduledClasses">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Start" class="control-label"></label>
+                    <input type="datetime-local" asp-for="Start" class="form-control" value='@Model.Start.ToString("yyyy-MM-ddThh:mm:ss")' />
+                    <span id="endValidation" asp-validation-for="Start" class="text-danger"></span><!-- If defaulting is necessary: DateTime.Now.ToString("yyyy-MM-ddThh:mm:ss") -->
+                </div>
+                <div class="form-group">
+                    <label asp-for="End" class="control-label"></label>
+                    <input type="datetime-local" asp-for="End" class="form-control" value='@Model.End.ToString("yyyy-MM-ddThh:mm:ss")' />
+                    <span id="endValidation" asp-validation-for="End" class="text-danger"></span>
+                </div>
+                <br />
+
+                <div class="form-group" style="margin-top: 20px">
+                    <input style="float:right" type="submit" value="Save" class="btn btn-primary" />
+                    <div style="float:right; margin-right: 10px">
+                        <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+                    </div>
+                    <div style="float:right; margin-right: 10px">
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.AttendanceRecordID">Delete</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,260 @@
+﻿@model PaginatedList<StudentGuardian>
+
+@{
+    bool noLogin = ViewBag.NoLogin;
+    ViewData["Title"] = "Guardians";
+    int guardians = ViewBag.guardianscount;
+}
+
+@if (noLogin == false)
+{
+<div class="row">
+    <div class="col-md-10">
+    </div>
+
+    <!-- Edit Menu Buttons -->
+
+    <div class="container" id="editstudent_tabmenu">
+        <ul class="nav nav-tabs">
+
+            <li>
+                <a asp-action="Edit" asp-controller="Student" asp-route-id="@ViewBag.studentid">
+                    <div class="button" id="editbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Details</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Student" asp-controller="Payment" asp-route-id="@ViewBag.studentid">
+                    <div class="button" id="paymentbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Payments</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Student" asp-controller="Enrollment" asp-route-id="@ViewBag.studentid">
+                    <div class="button" id="discbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Disciplines</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Attendance" asp-controller="Student" asp-route-studentId="@ViewBag.studentid">
+                    <div class="button" id="historybtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Attendance</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a asp-action="Index" asp-controller="Attachments" asp-route-studentid="@ViewBag.studentid">
+                    <div class="button" id="documentsbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Attachments</div>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <div class="button" id="guardianbtn">
+                    Guardians
+                    <div class="btnsel_line"></div>
+                </div>
+            </li>
+
+        </ul>
+        <br>
+    </div>
+</div>
+}
+
+
+<div class="text-center">
+    <h2 class="mb-5">Guardians for @ViewBag.studentname</h2>
+</div>
+
+@*<div class="row mb-3">
+    <div class="col-12">
+        <div class="container mt-5">
+            <form class="form-inline float-right" asp-route-studentid="@ViewBag.studentid" asp-action="Student">
+                <input class="form-control" name="searchString" asp-for="@ViewData["CurrentSearch"]" placeholder="Search Names" />
+                <div class="ml-2 btn-group">
+                    <button class="mr-2 btn btn-sm btn-primary" type="submit">Search</button>
+                    <a asp-action="Student" asp-route-studentid="@ViewBag.studentid" class="mr-2 btn btn-sm btn-secondary">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>*@
+
+<div class="ml-auto">
+
+    <table class="joelTable joelTable-light table table-light table-hover">
+        <thead>
+            <tr>
+                <th class="text-white">Primary</th>
+                <th><a class="text-white" asp-controller="Guardian" asp-action="Student" asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["FirstNameSortParm"]">First Name</a></th>
+                <th><a class="text-white" asp-controller="Guardian" asp-action="Student" asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["LastNameSortParm"]">Last Name</a></th>
+                <th><a class="text-white" asp-controller="Guardian" asp-action="Student" asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["PhoneSortParm"]">Phone Number</a></th>
+                <th class="text-white">Relationship</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    @if (noLogin == false)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsPrimary)
+                            </td>
+                            <td>
+                                <a class="table-link" asp-controller="Guardian" asp-action="Edit" asp-route-id="@item.GuardianID" 
+                                   asp-route-studentid="@item.StudentID" asp-route-studentguardianid="@item.StudentGuardianID">
+                                    @Html.DisplayFor(modelItem => item.Guardian.FirstName)
+                                </a>
+                            </td>
+                            <td>
+                                <a class="table-link" asp-controller="Guardian" asp-action="Edit" asp-route-id="@item.GuardianID" 
+                                   asp-route-studentid="@item.StudentID" asp-route-studentguardianid="@item.StudentGuardianID">
+                                    @Html.DisplayFor(modelItem => item.Guardian.LastName)
+                                </a>
+                            </td>
+                            <td>
+                                <a class="table-link" asp-controller="Guardian" asp-action="Edit" asp-route-id="@item.GuardianID" 
+                                   asp-route-studentid="@item.StudentID" asp-route-studentguardianid="@item.StudentGuardianID">
+                                    @Html.DisplayFor(modelItem => item.Guardian.Phone)
+                                </a>
+                            </td>
+                            <td>
+                                <a class="table-link" asp-controller="Guardian" asp-action="Edit" asp-route-id="@item.GuardianID"
+                                   asp-route-studentid="@item.StudentID" asp-route-studentguardianid="@item.StudentGuardianID">
+                                    @Html.DisplayFor(modelItem => item.Relationship)
+                                    </a>
+                            </td>
+                            <td style="text-align:center">
+                                <a class="btn-sm btn-danger text-white" asp-controller="Guardian" asp-action="Unlink" 
+                                   asp-route-studentguardianid="@item.StudentGuardianID" asp-route-studentid="@item.StudentID">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                     else
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsPrimary)
+                            </td>
+                            <td>
+                                <label class="table-link">
+                                    @Html.DisplayFor(modelItem => item.Guardian.FirstName)
+                                </label>
+                            </td>
+                            <td>
+                                <label class="table-link">
+                                    @Html.DisplayFor(modelItem => item.Guardian.LastName)
+                                </label>
+                            </td>
+                            <td>
+                                <label class="table-link">
+                                    @Html.DisplayFor(modelItem => item.Guardian.Phone)
+                                </label>
+                            </td>
+                            <td>
+                                <label class="table-link">
+                                    @Html.DisplayFor(modelItem => item.Relationship)
+                                </label>
+                            </td>
+                            <td style="text-align:center">
+                                <a class="btn-sm btn-danger text-white" asp-controller="Guardian" asp-action="Unlink" 
+                                   asp-route-studentguardianid="@item.StudentGuardianID" asp-route-studentid="@item.StudentID">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    
+                }
+            }
+            else
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="row mt-3">
+        @if (!ViewBag.FromStudentWorkflow)
+        {
+        <!-- Note: This button should also get styled properly when the other two buttons are getting styled, 
+                I am just leaving it out for now in case we end up not getting to it, things will match -->
+        <div class="col">
+            <a class="btn btn-primary" asp-route-id="@ViewBag.studentid" asp-action="create">Add + </a>
+            <a class="btn btn-primary " asp-route-studentid="@ViewBag.studentid" asp-route-fromStudentWorkflow='false' 
+               asp-action="AllGuardians">Add Existing</a>
+        </div>
+        }
+        else
+        {
+            <div class="col">
+                <!-- Note: We need to apply the button style to both of these buttons and have them line up inline. 
+                    The below buttons only show up when not logged in and adding guardians to a student -->
+                <a class="btn btn-primary" asp-route-id="@ViewBag.studentid" asp-route-fromStudentWorkflow='true' asp-action="create">Add + </a>
+                <a class="btn btn-primary" asp-route-fromStudentWorkflow='true'
+                       asp-route-studentid="@ViewBag.studentid" asp-action="AllGuardians">Add Existing</a>
+                @if (noLogin)
+                {
+                    
+                    <a class="btn btn-primary" asp-action="Signin" asp-controller="Account">Finish</a>
+                }
+                else
+                {
+
+                    <a class="btn btn-primary" asp-action="Student" asp-route-id="@ViewBag.studentid" asp-controller="Payment">Finish</a>
+                }
+                
+            </div>
+        }
+    </div>
+</div>
+
+<br>
+
+<div class="text-center">
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Student" asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+       class="btn btn-secondary mr-2 @prevDisabled">
+        Previous
+    </a>
+
+    Page @Model.PageIndex of @Model.TotalPages
+
+
+    <a asp-action="Student" asp-route-studentid="@ViewBag.studentid" asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)" asp-route-searchString="@ViewData["CurrentSearch"]"
+       class="btn btn-secondary ml-2 @nextDisabled">
+        Next
+    </a>
+</div>

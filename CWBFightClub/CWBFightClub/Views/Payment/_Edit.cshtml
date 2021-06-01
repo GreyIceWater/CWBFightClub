@@ -1,0 +1,55 @@
+﻿@model Payment
+
+<form class="form" method="post" asp-action="Edit" asp-controller="Payment">
+    <input type="hidden" asp-for="PaymentID" value="@Model.PaymentID"/>
+    <input type="hidden" asp-for="StudentID" value="@Model.StudentID"/>
+    <div class="card enrollmentCard" style="border: 2px solid black">
+        <a asp-action="Delete" asp-controller="Payment" asp-route-id="@Model.PaymentID"
+           class="deletePaymentButton btn btn-sm btn-outline-danger"
+           onclick="return confirm('Are you sure you wish to delete this record?');">Delete</a>
+        <div class="card-header bg-dark">
+            <h2 class="text-white">Payment Details</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4">
+                    <label asp-for="ReceivedDate"></label>
+                </div>
+                <div class="col-6">
+                    <input readonly type="date" asp-for="ReceivedDate" class="form-control paymentInput" />
+                    <span asp-validation-for="Note" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label asp-for="Amount"></label>
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input readonly type="number" min=".01" step=".01" class="form-control paymentInput" asp-for="Amount" />
+                    </div>
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label asp-for="Note"></label>
+                    <textarea readonly asp-for="Note" class="form-control paymentInput"></textarea>
+                    <span asp-validation-for="Note" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="form-group my-1">
+                <input id="paymentEditSaveButton" style="display: none; float: right;" type="submit" value="Save" class="btn btn-primary" />
+                <input id="paymentEditEditButton" style="float: right;" onclick="EditPayment();" type="button" value="Edit" class="btn btn-primary" />
+                <div style="float: right; margin-right: 10px">
+                    <a class="btn btn-secondary" asp-action="Student" asp-controller="Payment" asp-route-id="@Model.StudentID">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

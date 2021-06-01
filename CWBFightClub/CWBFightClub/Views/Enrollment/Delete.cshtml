@@ -1,0 +1,110 @@
+﻿@model Enrollment
+
+@{
+    ViewData["Title"] = "Delete Enrollment Record";
+}
+
+<br />
+<h2 class="text-center">Delete Enrollment Record</h2>
+
+<h5 class="alert-danger text-center">This will delete all records of belts achieved tied to this record. 
+    If you meant to cancel enrollment, please use the back button and select Stop Enrollment or set an End Date.</h5>
+<br />
+<h4 class="text-center">Student Enrollment Record</h4>
+<div class="deletestudent_table">
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Student.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Student.FirstName)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Student.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Student.LastName)
+        </dd>
+
+    </dl>
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Discipline.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Discipline.Name)
+        </dd>
+    </dl>
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+    </dl>
+    @if (Model.EndDate != null)
+    {
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+        </dl>
+    }
+    @for (int i = 0; i < Model.AchievedBelts.Count; i++)
+    {
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AchievedBelts[0].Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AchievedBelts[i].Name)
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AchievedBelts[0].DateAchieved)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AchievedBelts[i].DateAchieved)
+            </dd>
+        </dl>
+    }
+    <div class="row">
+        <div class="col-6">
+            <h5 style="float:right; margin-top: 5px;">Really delete this record?</h5>
+        </div>
+        <div class="col-6">
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="EnrollmentID" />
+                @if (TempData["FromStudentWorkflow"] != null && bool.Parse(TempData["FromStudentWorkflow"].ToString()))
+                {
+                    <input hidden name="fromStudentWorkflow" value='true' />
+                }
+                else
+                {
+                    <input hidden name="fromStudentWorkflow" value='false' />
+                }
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                @if (TempData["FromStudentWorkflow"] != null)
+                {
+                    <a class="btn btn-secondary" asp-action="Student" asp-controller="Enrollment" asp-route-fromStudentWorkflow="true" asp-route-id="@Model.StudentID">Cancel</a>
+
+                }
+                else
+                {
+                    <a class="btn btn-secondary" asp-action="Student" asp-controller="Enrollment" asp-route-fromStudentWorkflow="false"asp-route-id="@Model.StudentID">Cancel</a>
+                }
+            </form>
+        </div>
+    </div>
+</div>

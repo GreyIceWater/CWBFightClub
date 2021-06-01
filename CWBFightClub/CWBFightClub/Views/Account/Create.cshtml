@@ -1,0 +1,73 @@
+﻿@model Account
+
+@{ ViewData["Title"] = "Account Register";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div class="row">
+    <div class="col-md-10">
+        <h4>Create Instructor</h4>
+        <hr />
+    </div>
+</div>
+
+@if (ViewBag.InstructorsExist)
+{
+    <form asp-action="Create" id="validForm">
+        <div class="row">
+            <div class="col-md-5">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="StudentID" class="control-label">Instructor</label>
+                    <select class="form-control" asp-for="StudentID"
+                            asp-items="@ViewBag.Students">
+                    </select>
+                    <span asp-validation-for="StudentID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="faeye1">
+                    <label asp-for="Password" class="control-label"></label>
+                    <div class="input-group">
+                        <input asp-for="Password" class="form-control password" type="password">
+                        <div class="input-group-append eyeBallContainer">
+                            <div class="input-group-text border-0 bg-transparent">
+                                <i onclick="loginPassword();" class="fas fa-eye" id="togglePassword"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="faeye">
+                    <label asp-for="Password2" class="control-label">Confirm Password</label>
+                    <div class="input-group">
+                        <input asp-for="Password2" class="form-control password" type="password">
+                        <div class="input-group-append eyeBallContainer">
+                            <div class="input-group-text border-0 bg-transparent">
+                                <i onclick="loginPassword2();" class="fas fa-eye" id="togglePassword2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Password2" class="text-danger"></span>
+                </div>
+                <div class="form-group" style="margin-top: 100px">
+                    <input style="float:right" type="submit" value="Create" class="btn btn-primary" />
+                    <div style="float:right; margin-right: 10px">
+                        <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <h2 class="alert-danger text-center">No Instructors Exist That Need Accounts</h2>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>formValIndicator();</script>
+    <script src="~/js/password.js"></script>
+}

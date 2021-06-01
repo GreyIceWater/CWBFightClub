@@ -1,0 +1,104 @@
+﻿@model Discipline
+
+@{
+    ViewData["Title"] = "Edit Discipline";
+}
+
+<div class="row">
+    <div class="col-md-10">
+
+    </div>
+
+    <!-- Edit Menu Buttons -->
+
+    <div class="container" id="editstudent_tabmenu">
+        <ul class="nav nav-tabs">
+
+            <li>
+                <div class="button" id="editbtn">
+                    Edit
+                    <div class="btnsel_line"></div>
+                </div>
+            </li>
+
+            <li>
+                <a asp-action="Discipline" asp-controller="Enrollment" asp-route-id="@Model.DisciplineID">
+                    <div class="button" id="paymentbtn">
+                        <div id="translate"></div>
+                        <div id="buttonani">Enrollments</div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <br>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DisciplineID" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="6"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DefaultCostPerMonth" class="control-label"></label>
+                <input asp-for="DefaultCostPerMonth" class="form-control" />
+                <span asp-validation-for="DefaultCostPerMonth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CalendarColor" class="control-label"></label>
+                <input type="color" asp-for="CalendarColor" class="form-control" />
+                <span asp-validation-for="CalendarColor" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check" hidden>
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsArchived" /> @Html.DisplayNameFor(model => model.IsArchived)
+                </label>
+            </div>
+            <div class="form-group">
+                <input asp-for="CreatedDate" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="ModifiedDate" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="CreatedBy" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="ModifiedBy" class="form-control" hidden />
+            </div>
+            <br />
+            <div class="form-group" style="margin-top: 20px">
+                <input style="float:right" type="submit" value="Save" class="btn btn-primary" />
+                <div style="float:right; margin-right: 10px">
+                    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+                </div>
+                <div style="float:right; margin-right: 10px">
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.DisciplineID">Delete</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-7">
+        <h4>Belts</h4>
+        @{
+            await Html.RenderPartialAsync("~/Views/Belt/_BeltIndex.cshtml");
+        }
+        <div class="container">
+            @if (Model.Belts == null)
+            {
+                <h4 class="text-info text-center mt-2">Click Add + to create a belt.</h4>
+            }
+            <a type="button" class="btn btn-primary float-right mt-2" asp-action="create" asp-controller="belt" asp-route-id="@Model.DisciplineID">Add + </a>
+        </div>
+    </div>
+</div>

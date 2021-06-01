@@ -1,0 +1,113 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{ 
+    string routeData = ViewContext.RouteData.Values["Controller"].ToString();
+    string routeActionData = ViewContext.RouteData.Values["Action"].ToString();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - CWBFightClub</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/fa-svg-with-js.css" />
+    <script src="~/js/fontawesome-all.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <asp:content contentplacerholderid="head" runat="server" />
+
+    <!-- Calendar source files -->
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="~/js/js_calendar/example/css/tui-time-picker.css">
+    <link rel="stylesheet" type="text/css" href="~/js/js_calendar/example/css/tui-date-picker.css">
+    <link rel="stylesheet" type="text/css" href="~/js/js_calendar/dist/tui-calendar.css">
+    <!-- <link rel="stylesheet" type="text/css" href="~/js/js_calendar/example/css/default.css"> -->
+    <link rel="stylesheet" type="text/css" href="~/js/js_calendar/example/css/icons.css">
+    <script src="~/js/js_calendar/example/js/jquery-3.2.1.slim.min.js"></script>
+    <!-- END Calendar source -->
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom box-shadow mb-3">
+        <a class="navbar-brand" asp-area="" asp-controller="Dashboard" asp-action="Index">
+            <img src="~/Images/CWB_base.jpg" height="45" width="80" />
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarInner" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarInner" class="navbar-collapse collapse justify-content-between">
+            <ul class="navbar-nav">
+                <li class="@(routeActionData == "Checkin" ? "navActive" : string.Empty) nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="AttendanceRecord" asp-action="Checkin">Checkin</a>
+                </li>
+                @if (HttpContextAccessor.HttpContext.Session.GetString("Username") != null)
+                {
+                    <li class="@((routeData == "Student" || routeData == "Attachments" || routeActionData == "Student") ? "navActive" : string.Empty) nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Index">Students</a>
+                    </li>
+                    <li class="@((routeData == "Discipline" || routeData == "Belt" || routeActionData == "Discipline") ? "navActive" : string.Empty) nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Discipline" asp-action="Index">Disciplines</a>
+                    </li>
+                    <li class="@(routeData == "ScheduledClass" ? "navActive" : string.Empty) nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="ScheduledClass" asp-action="Index">Classes</a>
+                    </li>
+                    <li class="@(routeData == "Account" ? "navActive" : string.Empty) nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Instructors</a>
+                    </li>
+                    <li class="@((routeData == "Dashboard" || (routeData == "AttendanceRecord" && routeActionData != "Checkin") || routeData == "DatabaseAdministration") ? "navActive" : string.Empty) nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Admin</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="@((routeData == "Student" || routeActionData == "Student") ? "navActive" : string.Empty) nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Create">New Student</a>
+                    </li>
+}
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                @if (HttpContextAccessor.HttpContext.Session.GetString("Username") != null)
+                {
+                    <li class="nav-item dropdown my-auto">
+                        <div class="btn-group">
+                            <a class="text-danger dropdown-item" asp-controller="Account" asp-action="Signout">
+                                Log out ( @HttpContextAccessor.HttpContext.Session.GetString("Username") )
+                            </a>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item my-auto">
+                        <a class="nav-link" asp-controller="Account" asp-action="Signin">Log in</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="navstyle1"> &nbsp;  </div>
+        <div class="navstyle2"> &nbsp;  </div>
+    </nav>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted text-center">
+        <div class="container">
+            &copy; 2021 - CWBFightClub<br />
+            <a class="text-dark" asp-controller="Help" asp-action="Index">Help & How To</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/chartjs/chart.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

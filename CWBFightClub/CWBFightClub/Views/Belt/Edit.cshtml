@@ -1,0 +1,79 @@
+﻿@model Belt
+
+@{
+    ViewData["Title"] = "Edit Belt";
+}
+
+<div class="row">
+    <div class="col-md-10">
+
+    </div>
+
+    <!-- Edit Menu Buttons -->
+
+    <div class="container" id="editstudent_tabmenu">
+    </div>
+</div>
+<h4>Edit Belt</h4>
+<hr />
+
+<form asp-action="Edit">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BeltID" />
+            <div class="form-group">
+                <label asp-for="DisciplineID" class="control-label">Discipline</label>
+                <input value="@ViewBag.DisciplineName" class="form-control" readonly />
+                <span asp-validation-for="DisciplineID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BeltDescription" class="control-label"></label>
+                <textarea asp-for="BeltDescription" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="BeltDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rank" class="control-label"></label>
+                <input asp-for="Rank" class="form-control" />
+                <span asp-validation-for="Rank" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RankDescription" class="control-label"></label>
+                <textarea asp-for="RankDescription" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="RankDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check" hidden>
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsArchived" /> @Html.DisplayNameFor(model => model.IsArchived)
+                </label>
+            </div>
+            <div class="form-group">
+                <input asp-for="CreatedDate" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="ModifiedDate" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="CreatedBy" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="ModifiedBy" class="form-control" hidden />
+            </div>
+            <br />
+            <div class="form-group" style="margin-top: 20px">
+                <input style="float:right" type="submit" value="Save" class="btn btn-primary" asp-route-id="@Model.DisciplineID" />
+                <div style="float:right; margin-right: 10px">
+                    <a class="btn btn-secondary" asp-controller="discipline" asp-action="edit" asp-route-id="@Model.DisciplineID">Back to List</a>
+                </div>
+                <div style="float:right; margin-right: 10px">
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.BeltID">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

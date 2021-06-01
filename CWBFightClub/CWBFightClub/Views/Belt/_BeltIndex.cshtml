@@ -1,0 +1,45 @@
+﻿@model Discipline
+
+<table class="studenttable" id="studenttable">
+    <thead>
+        <tr>
+            <th>Belt Name</th>
+            <th>Belt Description</th>
+            <th>Rank</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Belts != null)
+        {
+            @foreach (var item in Model.Belts)
+            {
+                <tr onclick="">
+                    <td>
+                        <a class="table-link" asp-controller="belt" asp-action="Edit" asp-route-id="@item.BeltID">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </a>
+                    </td>
+                    <td>
+                        <a class="table-link" asp-controller="belt" asp-action="Edit" asp-route-id="@item.BeltID">
+                            @Html.DisplayFor(modelItem => item.BeltDescription)
+                        </a>
+                    </td>
+                    <td>
+                        <a class="table-link" asp-controller="belt" asp-action="Edit" asp-route-id="@item.BeltID">
+                            @Html.DisplayFor(modelItem => item.Rank)
+                        </a>
+                    </td>
+                </tr>
+
+            }
+        }
+        else
+        {
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,169 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = "Student Entry";
+}
+
+<!-- Edit Menu Buttons -->
+
+<div class="container" id="editstudent_tabmenu">
+    <ul class="nav nav-tabs">
+
+        <li>
+            <div class="button" id="editbtn">
+                <div id="translate"></div>
+                <a asp-action="Edit" asp-controller="Student" asp-route-id="@ViewBag.studentid">Details</a>
+            </div>
+        </li>
+
+        <li>
+            <div class="button" id="paymentbtn">
+                <div id="translate"></div>
+                <a asp-action="Student" asp-controller="Payment" asp-route-id="@ViewBag.studentid">Payments</a>
+            </div>
+        </li>
+
+        <li>
+            <div class="button" id="discbtn">
+                <div id="translate"></div>
+                <a asp-action="Student" asp-controller="Enrollment" asp-route-id="@ViewBag.studentid">Disciplines</a>
+            </div>
+        </li>
+
+        <li>
+            <div class="button" id="historybtn">
+                <div id="translate"></div>
+                <a asp-action="Edit" asp-controller="Student" asp-route-id="@ViewBag.studentid">History</a>
+            </div>
+        </li>
+
+        <li>
+            <div class="button" id="documentsbtn">
+                <div id="translate"></div>
+                <a asp-action="Edit" asp-controller="Student" asp-route-id="@ViewBag.studentid">Attachments</a>
+                <div class="btnsel_line"></div>
+            </div>
+        </li>
+        <li>
+            <div class="button" id="guardianbtn">
+                <div id="translate"></div>
+                Guardians
+            </div>
+        </li>
+        <font color="red" size="4"><p>Error, file with that name already exists.</p></font>
+    </ul>
+    <br>
+</div>
+
+@using (Html.BeginForm("CreateFile", "Student", new { StudentID = Model.StudentID }, FormMethod.Post, false, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <p><b>Upload Document for @Model.FirstName @Model.LastName</b></p>
+        <hr />
+
+        <div class="form-group">
+            @Html.Label("", "Document / Photo ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" id="Avatar" name="upload" /><br /><br />
+            </div>
+
+            <div class="form-group">
+                @Html.Label("", "Filename (leave empty for default)", new { @class = "control-label" })<br />
+                <input type="text" id="filename" name="filename" cols="50" maxlength="60" style="width: 250px;" />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Filetype:</label>
+                <select id="type" name="type" class="form-control" style="width:250px;">
+                    <option value="@FileType.Photo">@FileType.Photo</option>
+                    <option value="@FileType.Pdf">@FileType.Pdf</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("", "Comment", new { @class = "control-label col-md-2" })<br />
+                <textarea id="comment" name="comment" rows="4" cols="50" maxlength="300"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-secondary btn-sm" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<font color="red" size="4"><p>Error! File already exists or unsupported file type. Please try again.</p></font>
+
+<br />
+
+<dt>
+    Available Documents:
+</dt>
+
+<br />
+
+@if (Model.FilePaths.Any(f => f.FileType == FileType.Photo) || Model.FilePaths.Any(f => f.FileType == FileType.Pdf))
+{
+    <dd>
+        <table class="attachmenttable">
+            <tr>
+                @foreach (var img in Model.FilePaths)
+                {
+                    <td>
+                        <a href="~/Images/@img.FileName" target="_blank">
+                            <img width="175" height="175" border="0" align="center" src="~/Images/@img.FileName" />
+                        </a>
+
+                        <br /><br />
+                        <a href="~/Images/@img.FileName" download="@img.FileName" title="@img.FileName" class="btn btn-secondary btn-sm">Download</a>
+                        <a class="btn btn-secondary btn-sm" asp-action="Edit" asp-controller="FilePaths" asp-route-id="@img.FilePathId">Edit</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-controller="FilePaths" asp-route-id="@img.FilePathId">Delete</a>
+
+                        @{var txt = @img.FileName.ToString();
+
+                            if (txt.Length > 24)
+                            {
+                                txt = txt.Substring(0, 24) + "...";
+                                ViewBag.filenamesub = txt;
+                            }
+                            else
+                            {
+                                ViewBag.filenamesub = txt;
+                            }
+                        }
+
+                        @if (@img.Comment != null)
+                        {
+                            var comment = @img.Comment;
+
+                            if (comment.Length > 140)
+                            {
+                                comment = comment.Substring(0, 140) + "...";
+                                ViewBag.comment = comment;
+                            }
+                            else
+                            {
+                                ViewBag.comment = img.Comment;
+                            }
+                        }
+
+                        <div><font size="2pt"><b>@ViewBag.filenamesub</b></font></div>
+                        <div><font size="2pt"><b>Type:</b> @img.FileType</font></div>
+                        <div><font size="2pt"><b>Created:</b> @img.DateCreated</font></div>
+                        <div style="max-width: 200px;"><font size="2pt"><b>Comments:</b> @ViewBag.comment</font></div>
+                    </td>
+                }
+            </tr>
+        </table>
+    </dd>
+}
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/alterDateValidationForDOB.js"></script>
+}

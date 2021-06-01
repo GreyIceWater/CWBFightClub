@@ -1,0 +1,67 @@
+﻿@model Enrollment
+
+@{ 
+    string status = (Model.EndDate == null || Model.EndDate > DateTime.Now) ? "Active" : "Inactive";
+    string statusColor = (Model.EndDate == null || Model.EndDate > DateTime.Now) ? "darkgreen" : "darkred";
+    string borderColor = (Model.EndDate == null || Model.EndDate > DateTime.Now) ? "green" : "red";
+    ViewBag.EnrollmentDetail = Model.EnrollmentID;
+    ViewBag.StudentID = Model.StudentID;
+}
+
+<div class="card enrollmentCard" style="border: 2px solid @borderColor;">
+    <div class="card-header">
+        <h2>@Model.Discipline.Name Enrollment Details</h2>
+        <div class="row">
+            <div class="col-6">
+                <h4>Current Status: <span style="color: @statusColor">@status</span></h4>
+            </div>
+            <div class="col-6">
+                <p class="m-0">Start: @Model.StartDate.ToString("D")</p>
+                @if (Model.EndDate != null)
+                {
+                    <p class="m-0">End: @Model.EndDate.Value.ToString("D")</p>
+                }
+            </div>
+        </div>
+            
+    </div>
+    <div class="card-body">
+        @if (!Model.AchievedBelts.Any())
+        {
+            <h4>No belts have been achieved by @Model.Student.FirstName @Model.Student.LastName for @Model.Discipline.Name yet.</h4>
+        }
+        else
+        {
+        <table class="table table-borderless table-hover">
+            <thead>
+                <tr>
+                    <th>Belt</th>
+                    <th>Rank</th>
+                    <th>Date Achieved</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <partial name="~/Views/Enrollment/_AchievedBelts.cshtml" model="@Model.AchievedBelts.Where(x => x.IsArchived == false).OrderBy(x => x.Rank).ToList()"/>
+            </tbody>
+        </table>
+        }
+    </div>
+    <div class="card-footer">
+        <div class="form-group my-1">
+            <a asp-action="Discipline" asp-controller="Enrollment" asp-route-id="@Model.DisciplineID"
+               class="btn btn-secondary">All Students</a>
+            <div style="float: right; margin-right: 10px">
+                @if (ViewBag.NextBeltExists)
+                {
+                    <a class="btn btn-primary" asp-action="Add" asp-controller="AchievedBelt" asp-route-studentID="@Model.StudentID" asp-route-enrollmentID="@Model.EnrollmentID">Add Next Belt</a>
+                }
+                else
+                {
+                    <p>All belts associated with this discipline have been awarded.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

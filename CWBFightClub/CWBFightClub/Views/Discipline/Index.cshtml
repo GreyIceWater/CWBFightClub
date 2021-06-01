@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Discipline>
+
+@{
+    ViewData["Title"] = "Discipline Index";
+}
+
+<h4>Disciplines</h4>
+
+@*<div class="button" id="button-5">
+    <div id="translate"></div>
+    <a asp-action="create">Add + </a>
+</div>
+
+<div class="topnav">
+    <div class="search-container">
+        <form action="/action_page.php">
+            <input type="text" placeholder="Search.." name="search">
+        </form>
+    </div>
+</div>*@
+
+<a asp-action="create" class="btn btn-primary mb-2 mt-4">Add + </a>
+
+<table class="studenttable" id="studenttable">
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr onclick="">
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DisciplineID">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </a>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DisciplineID">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+</table>

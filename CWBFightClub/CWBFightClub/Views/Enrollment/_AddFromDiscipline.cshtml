@@ -1,0 +1,66 @@
+﻿@model Discipline
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form class="form" asp-action="AddFromDiscipline" asp-controller="Enrollment">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add a student to @Model.Name</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <input hidden name="disciplineID" asp-for="DisciplineID" value="@Model.DisciplineID.ToString()" />
+
+                    <div class="card enrollmentCard" style="border: 2px solid black;">
+                        <div class="card-header">
+                            <h2>Add An Enrollment</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="newStartDate">Start</label>
+                                </div>
+                                <div class="col-6">
+                                    <label for="newStudent">Student</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input id="newStartDate" type="date" name="startDate" class="form-control" value='@DateTime.Now.ToString("yyyy-MM-dd")' />
+                                </div>
+                                <div class="col-6">
+                                    @if (ViewBag.StudentsExist)
+                                    {
+                                        <select id="newStudent" class="form-control" name="studentID"
+                                                asp-items="@ViewBag.Students">
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <p>No students exist that are not already enrolled.</p>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <br />
+                                    <p class="text-center">This will add @Model.DefaultCostPerMonth per month by default.</p>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    @if (ViewBag.StudentsExist)
+                    {
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

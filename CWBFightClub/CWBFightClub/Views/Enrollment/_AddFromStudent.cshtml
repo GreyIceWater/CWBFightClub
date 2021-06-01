@@ -1,0 +1,73 @@
+﻿@model Student
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form class="form" asp-action="AddFromStudent" asp-controller="Enrollment">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add a discipline enrollment to @Model.FirstName @Model.LastName</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <input hidden name="studentID" asp-for="StudentID" value="@Model.StudentID.ToString()" />
+                    @if ((bool)ViewData["FromWorkflow"])
+                    {
+                        <input hidden name="fromStudentWorkflow" value='true'/>
+                    }
+                    <div class="card enrollmentCard" style="border: 2px solid black;">
+                        <div class="card-header">
+                            <h2>Add An Enrollment</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="newStartDate">Start</label>
+                                </div>
+                                <div class="col-6">
+                                    <label for="newDisc">Discipline</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    @if (ViewBag.noLogin)
+                                    {
+                                        <input readonly id="newStartDate" type="date" name="startDate"
+                                               class="form-control" value='@DateTime.Now.ToString("yyyy-MM-dd")' />
+                                    }
+                                    else
+                                    {
+                                        <input id="newStartDate" type="date" name="startDate"
+                                               class="form-control" value='@DateTime.Now.ToString("yyyy-MM-dd")' />
+                                    }
+
+                                </div>
+                                <div class="col-6">
+                                    @if (ViewBag.DisciplinesExist)
+                                    {
+                                        <select id="newDisc" class="form-control" name="disciplineID"
+                                                asp-items="@ViewBag.Disciplines">
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <p>No disciplines exist that are not already enrolled in.</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    @if (ViewBag.DisciplinesExist)
+                    {
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
